@@ -4,7 +4,7 @@ import {TbReload} from "react-icons/tb";
 import { useGlobalContext } from "../context";
 
 const Info = () => {
-  const {isTurn,setResetTrue} = useGlobalContext();
+  const {isXTurn,setResetTrue} = useGlobalContext();
 
   return (
     <div className="flex items-center space-x-5 mb-2">
@@ -13,7 +13,7 @@ const Info = () => {
         <ImCross className="text-xl text-cyan-400" />
       </div>
       <div className="w-20 h-8 bg-slate-600 rounded-md border-b-slate-950 border-b-4 text-slate-300 text-xs/8 uppercase font-extrabold flex justify-center items-center">
-        {isTurn === "circle" ? <BsFillRecordCircleFill className="text-sm " /> : <ImCross className="text-sm"/>}
+        {!isXTurn ? <BsFillRecordCircleFill className="text-sm " /> : <ImCross className="text-sm"/>}
         
         <div className="ml-1.5">turn</div>
       </div>
