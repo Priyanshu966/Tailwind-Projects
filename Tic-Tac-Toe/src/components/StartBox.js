@@ -1,28 +1,57 @@
 import {BsFillRecordCircleFill} from "react-icons/bs";
 import {ImCross} from "react-icons/im";
-import { useGlobalContext } from "../context";
+import {useGlobalContext} from "../context";
 
 const StartBox = () => {
-    const {setGameStartedTrue} = useGlobalContext();
+  const {setGameStartedTrue, isXTurn, setXTurnTrue, setXTurnFalse} =
+    useGlobalContext();
   return (
     <>
-      <div>
-        <BsFillRecordCircleFill className="text-xl text-yellow-500" />
-        <ImCross className="text-xl text-cyan-400" />
+      <div className="flex justify-center items-center space-x-4 mb-5">
+        <BsFillRecordCircleFill className="text-3xl text-yellow-500" />
+        <ImCross className="text-3xl text-cyan-400" />
       </div>
-      <div>
-        <p>pick player 1's mark</p>
-        <div>
-          <div>
-            <BsFillRecordCircleFill className="text-xl text-yellow-500" />
-          </div>
-          <div>
-            <ImCross className="text-xl text-cyan-400" />
+      <div className="bg-slate-600 px-6 py-5 rounded-2xl border-b-slate-900 border-b-8 w-[28rem]">
+        <p className="text-slate-300 uppercase text-center text-base font-bold tracking-wider mb-5 mt-0.5">
+          pick player 1's mark
+        </p>
+        <div className="flex  bg-slate-800 p-2 rounded-xl">
+          <div className="flex relative w-full">
+            <div
+              onClick={() => setXTurnFalse()}
+              className="flex justify-center items-center w-1/2 rounded-xl h-[54px] hover:bg-slate-700/50 transition-all duration-400 ease-linear"
+            >
+              <BsFillRecordCircleFill
+                className={`${
+                  isXTurn ? "text-slate-300" : "text-slate-800"
+                } text-3xl text-slate-300 transition-all duration-400 ease-linear`}
+              />
+            </div>
+            <div
+              onClick={() => setXTurnTrue()}
+              className="flex justify-center items-center w-1/2 rounded-xl h-[54px] hover:bg-slate-700/50 transition-all duration-400 ease-linear"
+            >
+              <ImCross
+                className={`${
+                  isXTurn ? "text-slate-800" : "text-slate-300"
+                } text-3xl text-slate-300 transition-all duration-400 ease-linear`}
+              />
+            </div>
+            <div
+              className={`${
+                isXTurn ? "translate-x-full" : ""
+              } bg-slate-300 w-1/2 h-[54px] rounded-xl absolute top-0 left-0 transition-all duration-200 ease-linear`}
+            ></div>
           </div>
         </div>
-        <p>remember : x goes first</p>
+        <p className="text-center text-slate-400 uppercase font-semibold mt-3">
+          remember : x goes first
+        </p>
       </div>
-      <button onClick={() => setGameStartedTrue()} className="bg-yellow-500 rounded-xl border-b-yellow-600 border-b-4 uppercase font-bold text-base tracking-wider px-4 py-3 hover:-translate-y-1 hover:bg-yellow-300 transition-all duration-150 ease-linear">
+      <button
+        onClick={() => setGameStartedTrue()}
+        className="bg-yellow-500 mt-6 rounded-xl border-b-yellow-600 border-b-8 uppercase font-bold text-xl tracking-wider px-4 py-4 hover:-translate-y-1 hover:bg-yellow-300 transition-all duration-150 ease-linear"
+      >
         new game
       </button>
     </>

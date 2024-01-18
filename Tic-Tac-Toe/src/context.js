@@ -1,5 +1,5 @@
 import {createContext, useContext} from "react";
-import {useState,useEffect} from "react";
+import {useState, useEffect} from "react";
 
 const AppContext = createContext();
 
@@ -8,9 +8,9 @@ const AppProvider = ({children}) => {
   const [isReset, setIsReset] = useState(false);
   const initialBoard = Array.from({length: 9});
   const [isBoard, setIsBoard] = useState(initialBoard);
-  const [isGameStarted,setIsGameStarted] = useState(false);
+  const [isGameStarted, setIsGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [isDraw,setIsDraw] = useState(false);
+  const [isDraw, setIsDraw] = useState(false);
 
   const handleTurn = () => {
     if (isXTurn) {
@@ -20,20 +20,27 @@ const AppProvider = ({children}) => {
     }
   };
 
-  const setGameStartedTrue = () =>{
-    setIsGameStarted(true);
-    console.log("")
+  const setXTurnTrue = () =>{
+    setIsXTurn(true);
   }
+  const setXTurnFalse = () => {
+    setIsXTurn(false);
+  };
+
+  const setGameStartedTrue = () => {
+    setIsGameStarted(true);
+    console.log("");
+  };
 
   const setGameStartedFalse = () => {
     setIsGameStarted(false);
   };
 
-  const resetBoard = () =>{
+  const resetBoard = () => {
     setIsBoard(initialBoard);
     setIsGameOver(false);
     setIsDraw(false);
-  }
+  };
 
   const setResetTrue = () => {
     setIsReset(true);
@@ -54,7 +61,11 @@ const AppProvider = ({children}) => {
   };
 
   const handleResult = () => {
-    if (isBoard[0] == isBoard[1] && isBoard[1] == isBoard[2] && isBoard[0] != undefined) {
+    if (
+      isBoard[0] == isBoard[1] &&
+      isBoard[1] == isBoard[2] &&
+      isBoard[0] != undefined
+    ) {
       setIsGameOver(true);
     } else if (
       isBoard[3] == isBoard[4] &&
@@ -98,7 +109,7 @@ const AppProvider = ({children}) => {
       isBoard[2] != undefined
     ) {
       setIsGameOver(true);
-    }else if (
+    } else if (
       isBoard[0] != undefined &&
       isBoard[1] != undefined &&
       isBoard[2] != undefined &&
@@ -114,11 +125,24 @@ const AppProvider = ({children}) => {
     }
   };
 
-
-  
   return (
     <AppContext.Provider
-      value={{isXTurn, handleTurn, setResetTrue, setResetFalse,isReset, handleBoard,isGameOver,isDraw,resetBoard,setGameStartedFalse,setGameStartedTrue}}
+      value={{
+        isXTurn,
+        handleTurn,
+        setResetTrue,
+        setResetFalse,
+        isReset,
+        handleBoard,
+        isGameOver,
+        isDraw,
+        resetBoard,
+        setGameStartedFalse,
+        setGameStartedTrue,
+        isGameStarted,
+        setXTurnTrue,
+        setXTurnFalse
+      }}
     >
       {children}
     </AppContext.Provider>

@@ -3,7 +3,7 @@ import {BsFillRecordCircleFill} from "react-icons/bs";
 import {useGlobalContext} from "../context";
 
 const Slide = () => {
-  const {isXTurn, isGameOver, isDraw, resetBoard, setResetTrue} =
+  const {isXTurn, isGameOver, isDraw, resetBoard, setResetTrue,setGameStartedFalse} =
     useGlobalContext();
   return (
     <div
@@ -18,7 +18,7 @@ const Slide = () => {
       >
         <p
           className={`${
-            isDraw ? "text-yellow-500" : "text-slate-300"
+            isDraw ? "text-yellow-500" : "text-slate-400"
           }  uppercase text-center font-bold tracking-wider mt-10`}
         >
           game over!
@@ -48,7 +48,17 @@ const Slide = () => {
             </>
           )}
         </div>
-        <div className="flex items-center justify-center mt-6">
+        <div className="flex items-center justify-center space-x-4 mt-6">
+          <button
+            onClick={() => {
+              resetBoard();
+              setResetTrue();
+              setGameStartedFalse();
+            }}
+            className="bg-slate-400 rounded-xl border-b-slate-500 border-b-4 uppercase font-bold text-base tracking-wider px-4 py-3 hover:-translate-y-1 hover:bg-slate-300 transition-all duration-150 ease-linear"
+          >
+            quit
+          </button>
           <button
             onClick={() => {
               resetBoard();

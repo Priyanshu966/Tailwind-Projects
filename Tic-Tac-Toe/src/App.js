@@ -6,7 +6,7 @@ function App() {
   const {isGameStarted} = useGlobalContext();
 
   return (
-    <main className="h-screen bg-slate-800 grid place-content-center">
+    <main className="font-sans h-screen bg-slate-800 grid place-content-center">
       {isGameStarted ? <Board/> : <StartBox/>}
     </main>
   );
