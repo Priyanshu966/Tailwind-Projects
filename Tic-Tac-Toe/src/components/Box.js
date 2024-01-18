@@ -5,31 +5,38 @@ import {useGlobalContext} from "../context";
 import {useRef, useEffect} from "react";
 
 const Box = ({pos}) => {
-  const {isXTurn, handleTurn, setResetFalse, isReset,handleBoard} = useGlobalContext();
+  const {isXTurn, handleTurn, setResetFalse, isReset, handleBoard, isGameOver,resetBoard} =
+    useGlobalContext();
   const boxElement = useRef();
 
   useEffect(() => {
     if (isReset) {
-      console.log("hello");
+      const setTime = setTimeout(() => {
+        const circle = boxElement.current.firstElementChild;
+        const cross = boxElement.current.lastElementChild;
 
-      setResetFalse();
+        circle.classList.add("hidden");
+        cross.classList.add("hidden");
+        console.log("hello");
+        setResetFalse();
+        resetBoard();
+      }, 200);
     }
   }, [isReset]);
 
   const handleBoxAndBoard = (e) => {
     handleBox(e);
-    
   };
 
   const handleBox = (e) => {
     const circle = e.currentTarget.firstElementChild;
     const cross = e.currentTarget.lastElementChild;
 
-    if (!isXTurn && cross.classList.contains("hidden")) {
+    if (!isXTurn && cross.classList.contains("hidden") && !isGameOver) {
       e.currentTarget.firstElementChild.classList.remove("hidden");
       handleTurn();
       handleBoard(pos);
-    } else if (isXTurn && circle.classList.contains("hidden")) {
+    } else if (isXTurn && circle.classList.contains("hidden") && !isGameOver) {
       e.currentTarget.lastElementChild.classList.remove("hidden");
       handleTurn();
       handleBoard(pos);

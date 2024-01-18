@@ -1,8 +1,7 @@
-import { Box,Info } from "./components";
-import { useGlobalContext } from "./context";
+import { Box,Info,Slide } from "./components";
+
 
 function App() {
-  const {handleBoard} = useGlobalContext();
 
   return (
     <main className="h-screen bg-slate-800 grid place-content-center">
@@ -18,6 +17,7 @@ function App() {
         <Box pos={7} />
         <Box pos={8} />
       </div>
+      <Slide/>
     </main>
   );
 }
