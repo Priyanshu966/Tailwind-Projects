@@ -1,9 +1,10 @@
 import {ImCross} from "react-icons/im";
 import {BsFillRecordCircleFill} from "react-icons/bs";
-import { useGlobalContext } from "../context";
+import {useGlobalContext} from "../context";
 
 const Slide = () => {
-    const {isXTurn,isGameOver,isDraw} = useGlobalContext();
+  const {isXTurn, isGameOver, isDraw, resetBoard, setResetTrue} =
+    useGlobalContext();
   return (
     <div
       className={`${
@@ -48,7 +49,13 @@ const Slide = () => {
           )}
         </div>
         <div className="flex items-center justify-center mt-6">
-          <button className="bg-yellow-500 rounded-xl border-b-yellow-600 border-b-4 uppercase font-bold text-base tracking-wider px-4 py-3 hover:-translate-y-1 hover:bg-yellow-300 transition-all duration-150 ease-linear">
+          <button
+            onClick={() => {
+              resetBoard();
+              setResetTrue();
+            }}
+            className="bg-yellow-500 rounded-xl border-b-yellow-600 border-b-4 uppercase font-bold text-base tracking-wider px-4 py-3 hover:-translate-y-1 hover:bg-yellow-300 transition-all duration-150 ease-linear"
+          >
             next round
           </button>
         </div>

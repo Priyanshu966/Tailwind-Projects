@@ -17,7 +17,6 @@ const Box = ({pos}) => {
 
         circle.classList.add("hidden");
         cross.classList.add("hidden");
-        console.log("hello");
         setResetFalse();
         resetBoard();
       }, 200);
@@ -51,12 +50,6 @@ const Box = ({pos}) => {
       className="w-16 h-16 bg-slate-600 rounded-md border-b-slate-950 border-b-4 grid place-content-center group"
     >
       <BsFillRecordCircleFill className="text-2xl text-yellow-500 hidden" />
-
-      {/* <FaRegDotCircle
-        className={`text-2xl text-yellow-500 hidden ${
-          isTurn == "circle" && "group-hover:block"
-        }`}
-      /> */}
       <ImCross className={`text-2xl text-cyan-400 hidden`} />
     </div>
   );
