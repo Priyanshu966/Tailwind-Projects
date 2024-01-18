@@ -19,22 +19,22 @@ const StartBox = () => {
           <div className="flex relative w-full">
             <div
               onClick={() => setXTurnFalse()}
-              className="flex justify-center items-center w-1/2 rounded-xl h-[54px] hover:bg-slate-700/50 transition-all duration-400 ease-linear"
+              className="w-1/2 rounded-xl h-[54px] hover:bg-slate-700/50 transition-all duration-400 ease-linear relative"
             >
               <BsFillRecordCircleFill
                 className={`${
                   isXTurn ? "text-slate-300" : "text-slate-800"
-                } text-3xl text-slate-300 transition-all duration-400 ease-linear`}
+                } text-4xl text-slate-300 transition-all duration-400 ease-linear absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50`}
               />
             </div>
             <div
               onClick={() => setXTurnTrue()}
-              className="flex justify-center items-center w-1/2 rounded-xl h-[54px] hover:bg-slate-700/50 transition-all duration-400 ease-linear"
+              className="flex justify-center items-center w-1/2 rounded-xl h-[54px] hover:bg-slate-700/50 transition-all duration-400 ease-linear relative"
             >
               <ImCross
                 className={`${
                   isXTurn ? "text-slate-800" : "text-slate-300"
-                } text-3xl text-slate-300 transition-all duration-400 ease-linear`}
+                } text-3xl text-slate-300 transition-all duration-400 ease-linear absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 z-50`}
               />
             </div>
             <div
