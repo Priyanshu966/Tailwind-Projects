@@ -1,6 +1,5 @@
 import {BsFillRecordCircleFill} from "react-icons/bs";
 import {ImCross} from "react-icons/im";
-import {FaRegDotCircle} from "react-icons/fa";
 import {useGlobalContext} from "../context";
 import {useRef, useEffect} from "react";
 
@@ -9,9 +8,10 @@ const Box = ({pos}) => {
     useGlobalContext();
   const boxElement = useRef();
 
+  //For resetting the board styling when reset btn is clicked
   useEffect(() => {
     if (isReset) {
-      const setTime = setTimeout(() => {
+       setTimeout(() => {
         const circle = boxElement.current.firstElementChild;
         const cross = boxElement.current.lastElementChild;
 
@@ -23,10 +23,10 @@ const Box = ({pos}) => {
     }
   }, [isReset]);
 
+  //For toggling 0 and x symbol in board
   const handleBoxAndBoard = (e) => {
     handleBox(e);
   };
-
   const handleBox = (e) => {
     const circle = e.currentTarget.firstElementChild;
     const cross = e.currentTarget.lastElementChild;
@@ -41,6 +41,7 @@ const Box = ({pos}) => {
       handleBoard(pos);
     }
   };
+
   return (
     <div
       ref={boxElement}

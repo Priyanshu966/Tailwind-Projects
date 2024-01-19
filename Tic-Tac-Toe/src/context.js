@@ -1,17 +1,21 @@
 import {createContext, useContext} from "react";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 
 const AppContext = createContext();
 
 const AppProvider = ({children}) => {
+  //Initial game array
+  const initialBoard = Array.from({length: 9});
+
+  //React states
   const [isXTurn, setIsXTurn] = useState(true);
   const [isReset, setIsReset] = useState(false);
-  const initialBoard = Array.from({length: 9});
   const [isBoard, setIsBoard] = useState(initialBoard);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isDraw, setIsDraw] = useState(false);
 
+  //For changing turns
   const handleTurn = () => {
     if (isXTurn) {
       setIsXTurn(false);
@@ -19,35 +23,35 @@ const AppProvider = ({children}) => {
       setIsXTurn(true);
     }
   };
-
-  const setXTurnTrue = () =>{
+  const setXTurnTrue = () => {
     setIsXTurn(true);
-  }
+  };
   const setXTurnFalse = () => {
     setIsXTurn(false);
   };
 
+  //For toggling StartBox
   const setGameStartedTrue = () => {
     setIsGameStarted(true);
-    console.log("");
   };
-
   const setGameStartedFalse = () => {
     setIsGameStarted(false);
   };
 
+  //For resetting the game board
   const resetBoard = () => {
     setIsBoard(initialBoard);
     setIsGameOver(false);
     setIsDraw(false);
   };
-
   const setResetTrue = () => {
     setIsReset(true);
   };
   const setResetFalse = () => {
     setIsReset(false);
   };
+
+  //For handling board array
   const handleBoard = (pos) => {
     let turn = "x";
     if (isXTurn) {
@@ -60,6 +64,7 @@ const AppProvider = ({children}) => {
     handleResult();
   };
 
+  //For handling game results
   const handleResult = () => {
     if (
       isBoard[0] == isBoard[1] &&
@@ -141,7 +146,7 @@ const AppProvider = ({children}) => {
         setGameStartedTrue,
         isGameStarted,
         setXTurnTrue,
-        setXTurnFalse
+        setXTurnFalse,
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 import {BsFillRecordCircleFill} from "react-icons/bs";
 import {ImCross} from "react-icons/im";
 import {useGlobalContext} from "../context";
+import {LongButton} from "../components"
 
 const StartBox = () => {
   const {setGameStartedTrue, isXTurn, setXTurnTrue, setXTurnFalse} =
@@ -48,12 +49,7 @@ const StartBox = () => {
           remember : x goes first
         </p>
       </div>
-      <button
-        onClick={() => setGameStartedTrue()}
-        className="bg-yellow-500 mt-6 rounded-xl border-b-yellow-600 border-b-8 uppercase font-bold text-xl tracking-wider px-4 py-4 hover:-translate-y-1 hover:bg-yellow-300 transition-all duration-150 ease-linear"
-      >
-        new game
-      </button>
+      <LongButton setGameStart={setGameStartedTrue}/>
     </>
   );
 };

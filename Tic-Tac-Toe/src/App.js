@@ -1,4 +1,4 @@
-import { Board, Box,Info,Slide,StartBox } from "./components";
+import { Board,StartBox } from "./components";
 import { useGlobalContext } from "./context";
 
 
