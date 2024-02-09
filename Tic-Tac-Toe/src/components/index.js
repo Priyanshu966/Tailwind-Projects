@@ -4,5 +4,6 @@ import Slide from "./Slide";
 import Board from "./Board";
 import StartBox from "./StartBox";
 import LongButton from "./LongButton";
+import DifficultySlider from "./DifficultySlider";
 
-export {Box,Info,Slide,Board,StartBox,LongButton};
+export {Box,Info,Slide,Board,StartBox,LongButton,DifficultySlider};

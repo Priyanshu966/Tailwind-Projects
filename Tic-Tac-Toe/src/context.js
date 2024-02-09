@@ -14,6 +14,22 @@ const AppProvider = ({children}) => {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isDraw, setIsDraw] = useState(false);
+  const [isPlayerVsCpu,setIsPlayerVsCpu] = useState(false);
+  const [winCond, setWinCond] = useState([
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [6, 4, 2],
+  ]);
+  // For starting player vs cpu game
+  const setPlayerVsCpuOn = () =>{
+    setIsPlayerVsCpu(true);
+    console.log(isPlayerVsCpu);
+  }
 
   //For changing turns
   const handleTurn = () => {
@@ -147,6 +163,8 @@ const AppProvider = ({children}) => {
         isGameStarted,
         setXTurnTrue,
         setXTurnFalse,
+        isPlayerVsCpu,
+        setPlayerVsCpuOn,
       }}
     >
       {children}
