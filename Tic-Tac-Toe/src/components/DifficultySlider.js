@@ -21,10 +21,13 @@ const DifficultySlider = () => {
         >
           difficulty level
         </p>
-        <div className='grid place-items-center gap-y-4'>
-          {difficulty.map((item) => {
+        <div className="grid place-items-center gap-y-4">
+          {difficulty.map((item, index) => {
             return (
-              <button className="w-64 font-bold tracking-wider uppercase transition-all duration-150 ease-linear border-b-4 rounded-lg h-14 bg-slate-400 border-b-slate-600 hover:bg-slate-300 hover:-translate-y-1">
+              <button
+                key={index}
+                className="w-64 font-bold tracking-wider uppercase transition-all duration-150 ease-linear border-b-4 rounded-lg h-14 bg-slate-400 border-b-slate-600 hover:bg-slate-300 hover:-translate-y-1"
+              >
                 {item}
               </button>
             );

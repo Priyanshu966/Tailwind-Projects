@@ -12,10 +12,14 @@ const AppProvider = ({children}) => {
   const [isReset, setIsReset] = useState(false);
   const [isBoard, setIsBoard] = useState(initialBoard);
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [isGameOver, setIsGameOver] = useState(false);
-  const [isDraw, setIsDraw] = useState(false);
-  const [isPlayerVsCpu,setIsPlayerVsCpu] = useState(false);
-  const [winCond, setWinCond] = useState([
+  const [isGameOver, setIsGameOver] = useState({
+    status: false,
+    winner: "none",
+    winRow: [],
+  });
+  const [isCount, setIsCount] = useState(1);
+  const [isPlayerVsCpu, setIsPlayerVsCpu] = useState(false);
+  const [isWinCond, setIsWinCond] = useState([
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -26,10 +30,15 @@ const AppProvider = ({children}) => {
     [6, 4, 2],
   ]);
   // For starting player vs cpu game
-  const setPlayerVsCpuOn = () =>{
+  const setPlayerVsCpuOn = () => {
     setIsPlayerVsCpu(true);
     console.log(isPlayerVsCpu);
-  }
+  };
+
+  //For increasing count
+  const countIncrement = async () => {
+    await setIsCount((prev) => prev + 1);
+  };
 
   //For changing turns
   const handleTurn = () => {
@@ -57,8 +66,8 @@ const AppProvider = ({children}) => {
   //For resetting the game board
   const resetBoard = () => {
     setIsBoard(initialBoard);
-    setIsGameOver(false);
-    setIsDraw(false);
+    setIsGameOver({status: false, winner: "none", winRow: []});
+    setIsCount(0);
   };
   const setResetTrue = () => {
     setIsReset(true);
@@ -81,68 +90,31 @@ const AppProvider = ({children}) => {
   };
 
   //For handling game results
+
   const handleResult = () => {
-    if (
-      isBoard[0] == isBoard[1] &&
-      isBoard[1] == isBoard[2] &&
-      isBoard[0] != undefined
-    ) {
-      setIsGameOver(true);
-    } else if (
-      isBoard[3] == isBoard[4] &&
-      isBoard[4] == isBoard[5] &&
-      isBoard[3] != undefined
-    ) {
-      setIsGameOver(true);
-    } else if (
-      isBoard[6] == isBoard[7] &&
-      isBoard[7] == isBoard[8] &&
-      isBoard[6] != undefined
-    ) {
-      setIsGameOver(true);
-    } else if (
-      isBoard[0] == isBoard[3] &&
-      isBoard[3] == isBoard[6] &&
-      isBoard[0] != undefined
-    ) {
-      setIsGameOver(true);
-    } else if (
-      isBoard[1] == isBoard[4] &&
-      isBoard[4] == isBoard[7] &&
-      isBoard[1] != undefined
-    ) {
-      setIsGameOver(true);
-    } else if (
-      isBoard[2] == isBoard[5] &&
-      isBoard[5] == isBoard[8] &&
-      isBoard[2] != undefined
-    ) {
-      setIsGameOver(true);
-    } else if (
-      isBoard[0] == isBoard[4] &&
-      isBoard[4] == isBoard[8] &&
-      isBoard[0] != undefined
-    ) {
-      setIsGameOver(true);
-    } else if (
-      isBoard[2] == isBoard[4] &&
-      isBoard[4] == isBoard[6] &&
-      isBoard[2] != undefined
-    ) {
-      setIsGameOver(true);
-    } else if (
-      isBoard[0] != undefined &&
-      isBoard[1] != undefined &&
-      isBoard[2] != undefined &&
-      isBoard[3] != undefined &&
-      isBoard[4] != undefined &&
-      isBoard[5] != undefined &&
-      isBoard[6] != undefined &&
-      isBoard[7] != undefined &&
-      isBoard[8] != undefined
-    ) {
-      setIsGameOver(true);
-      setIsDraw(true);
+    console.log(isCount);
+    for (let i = 0; i < isWinCond.length; i++) {
+      if (
+        isBoard[isWinCond[i][0]] == isBoard[isWinCond[i][1]] &&
+        isBoard[isWinCond[i][1]] == isBoard[isWinCond[i][2]] &&
+        isBoard[isWinCond[i][2]] != undefined
+      ) {
+        let winner;
+        if (isXTurn) {
+          winner = "x";
+        } else {
+          winner = "0";
+        }
+        setIsGameOver({
+          status: true,
+          winner: winner,
+          winRow: [isWinCond[i][0], isWinCond[i][1], isWinCond[i][2]],
+        });
+        return;
+      }
+      if (isCount >= 9) {
+        setIsGameOver({status: true, winner: "tie", winRow: []});
+      }
     }
   };
 
@@ -156,7 +128,6 @@ const AppProvider = ({children}) => {
         isReset,
         handleBoard,
         isGameOver,
-        isDraw,
         resetBoard,
         setGameStartedFalse,
         setGameStartedTrue,
@@ -165,6 +136,7 @@ const AppProvider = ({children}) => {
         setXTurnFalse,
         isPlayerVsCpu,
         setPlayerVsCpuOn,
+        countIncrement,
       }}
     >
       {children}

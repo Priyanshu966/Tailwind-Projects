@@ -7,13 +7,13 @@ const StartBox = () => {
   const {setGameStartedTrue, isXTurn, setXTurnTrue, setXTurnFalse,setPlayerVsCpuOn} =
     useGlobalContext();
   return (
-    <>
+    <div className="grid w-screen h-screen place-content-center animate-fadeInUp">
       <div className="flex items-center justify-center mb-5 space-x-4">
         <BsFillRecordCircleFill className="text-3xl text-yellow-500" />
         <ImCross className="text-3xl text-cyan-400" />
       </div>
       <div className="bg-slate-600 px-6 py-5 rounded-2xl border-b-slate-900 border-b-8 w-[28rem]">
-        <p className="text-slate-300 uppercase text-center text-base font-bold tracking-wider mb-5 mt-0.5">
+        <p className="text-slate-300 uppercase text-center text-base font-bold tracking-wider mb-5 mt-0.5 ">
           pick player 1's mark
         </p>
         <div className="flex p-2 bg-slate-800 rounded-xl">
@@ -60,7 +60,7 @@ const StartBox = () => {
         text="NEW GAME (VS PLAYER)"
       />
       <DifficultySlider />
-    </>
+    </div>
   );
 };
 export default StartBox;
