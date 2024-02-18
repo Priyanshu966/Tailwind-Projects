@@ -67,7 +67,7 @@ const AppProvider = ({children}) => {
   const resetBoard = () => {
     setIsBoard(initialBoard);
     setIsGameOver({status: false, winner: "none", winRow: []});
-    setIsCount(0);
+    setIsCount(1);
   };
   const setResetTrue = () => {
     setIsReset(true);
@@ -92,7 +92,6 @@ const AppProvider = ({children}) => {
   //For handling game results
 
   const handleResult = () => {
-    console.log(isCount);
     for (let i = 0; i < isWinCond.length; i++) {
       if (
         isBoard[isWinCond[i][0]] == isBoard[isWinCond[i][1]] &&
@@ -108,7 +107,7 @@ const AppProvider = ({children}) => {
         setIsGameOver({
           status: true,
           winner: winner,
-          winRow: [isWinCond[i][0], isWinCond[i][1], isWinCond[i][2]],
+          winRow: [...isWinCond[i]],
         });
         return;
       }
