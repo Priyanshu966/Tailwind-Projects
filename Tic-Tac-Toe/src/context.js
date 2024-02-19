@@ -29,6 +29,7 @@ const AppProvider = ({children}) => {
     [0, 4, 8],
     [6, 4, 2],
   ]);
+
   // For starting player vs cpu game
   const setPlayerVsCpuOn = () => {
     setIsPlayerVsCpu(true);

@@ -3,6 +3,7 @@ import {ImCross} from "react-icons/im";
 import {useGlobalContext} from "../context";
 import {useRef, useEffect} from "react";
 import delay from "../utils/delay";
+import {useCallback} from "react";
 
 const Box = ({pos}) => {
   const {
@@ -18,9 +19,8 @@ const Box = ({pos}) => {
   const boxElement = useRef();
 
   //For styling button when game is over
-  useEffect(() => {
+  const memoized = useCallback(async () => {
     if (isGameOver.status) {
-      console.log(isGameOver);
       for (let x of isGameOver.winRow) {
         if (x == pos) {
           if (isGameOver.winner === "x") {
@@ -42,15 +42,19 @@ const Box = ({pos}) => {
             circle.classList.remove("text-yellow-500");
             circle.classList.add("text-slate-600");
           }
+          break;
         }
       }
     }
-  }, [isGameOver]);
+  }, [isGameOver.status]);
+
+  useEffect(() => {
+    memoized();
+  }, [isGameOver.status]);
 
   //For resetting the board styling when reset btn is clicked
   useEffect(() => {
     if (isReset) {
-      delay(5000);
       setTimeout(() => {
         const circle = boxElement.current.firstElementChild;
         const cross = boxElement.current.lastElementChild;

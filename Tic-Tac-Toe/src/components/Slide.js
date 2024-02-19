@@ -3,18 +3,27 @@ import {BsFillRecordCircleFill} from "react-icons/bs";
 import {useGlobalContext} from "../context";
 
 const Slide = () => {
-  const {isGameOver, resetBoard, setResetTrue,setGameStartedFalse} =
+  const {isGameOver, resetBoard, setResetTrue, setGameStartedFalse} =
     useGlobalContext();
+
   return (
     <div
       className={`${
-        isGameOver.status ? "visible" : "invisible"
-      } w-screen h-screen bg-black/50  fixed grid place-items-center`}
+        isGameOver.status
+          ? isGameOver.winner == "tie"
+            ? "visible"
+            : "visible delay-1000"
+          : "invisible"
+      } w-screen h-screen bg-black/50  fixed grid place-items-center transition-all duration-0`}
     >
       <div
         className={`${
-          isGameOver.status ? "" : "-translate-x-full"
-        } font-sans w-full h-64 bg-slate-800 transition-all duration-500 linear`}
+          isGameOver.status
+            ? isGameOver.winner == "tie"
+              ? ""
+              : "delay-1000"
+            : "-translate-x-full"
+        } font-sans w-full h-64 bg-slate-800 transition-all duration-500 linear `}
       >
         <p
           className={`${
