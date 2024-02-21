@@ -1,17 +1,17 @@
-import {useGlobalContext} from "../context";
+import {useGameContext} from "../context/game_context";
 
 const DifficultySlider = () => {
-  const {isPlayerVsCpu} = useGlobalContext();
+  const {isGameType, isGameStarted} = useGameContext();
   const difficulty = ["easy", "medium", "hard", "impossible"];
   return (
     <div
       className={`${
-        isPlayerVsCpu ? "visible" : "invisible"
+        isGameType == "cpu" ? "visible" : "invisible"
       } w-screen h-screen bg-black/50  fixed grid place-items-center z-50`}
     >
       <div
         className={`${
-          isPlayerVsCpu ? "" : "-translate-x-full"
+          isGameType == "cpu" ? "" : "-translate-x-full"
         } font-sans w-full bg-slate-800 transition-all duration-500 linear py-11`}
       >
         <p

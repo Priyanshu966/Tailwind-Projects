@@ -1,39 +1,41 @@
 import {ImCross} from "react-icons/im";
 import {BsFillRecordCircleFill} from "react-icons/bs";
-import {useGlobalContext} from "../context";
+import {useGameContext} from "../context/game_context";
+import {useBoardContext} from "../context/board_context";
 
 const Slide = () => {
-  const {isGameOver, resetBoard, setResetTrue, setGameStartedFalse} =
-    useGlobalContext();
+  const {isGameOver, setIsGameOverFalse, setIsGameStartedFalse} =
+    useGameContext();
+  const {resetBoard, setResetTrue, isWinner} = useBoardContext();
 
   return (
     <div
       className={`${
-        isGameOver.status
-          ? isGameOver.winner == "tie"
+        isGameOver
+          ? isWinner.winner == "tie"
             ? "visible"
-            : "visible delay-1000"
+            : "visible delay-[800ms]"
           : "invisible"
       } w-screen h-screen bg-black/50  fixed grid place-items-center transition-all duration-0`}
     >
       <div
         className={`${
-          isGameOver.status
-            ? isGameOver.winner == "tie"
+          isGameOver
+            ? isWinner.winner == "tie"
               ? ""
-              : "delay-1000"
+              : "delay-[800ms]"
             : "-translate-x-full"
         } font-sans w-full h-64 bg-slate-800 transition-all duration-500 linear `}
       >
         <p
           className={`${
-            isGameOver.winner == "tie" ? "text-yellow-500" : "text-slate-400"
+            isWinner.winner == "tie" ? "text-yellow-500" : "text-slate-400"
           }  uppercase text-center font-bold tracking-wider mt-10`}
         >
           game over!
         </p>
         <div className="flex items-center justify-center mt-2 space-x-4 uppercase">
-          {isGameOver.winner == "tie" ? (
+          {isWinner.winner == "tie" ? (
             <>
               <ImCross className="text-5xl text-slate-300" />
               <h2 className="px-3 text-4xl font-bold tracking-wide text-slate-300">
@@ -41,7 +43,7 @@ const Slide = () => {
               </h2>
               <BsFillRecordCircleFill className="text-5xl text-slate-300" />
             </>
-          ) : isGameOver.winner == "0" ? (
+          ) : isWinner.winner == "0" ? (
             <>
               <BsFillRecordCircleFill className="text-6xl text-yellow-500" />
               <h2 className="text-4xl font-bold tracking-wide text-yellow-500">
@@ -62,7 +64,8 @@ const Slide = () => {
             onClick={() => {
               resetBoard();
               setResetTrue();
-              setGameStartedFalse();
+              setIsGameStartedFalse();
+              setIsGameOverFalse();
             }}
             className="px-4 py-3 text-base font-bold tracking-wider uppercase transition-all duration-150 ease-linear border-b-4 bg-slate-400 rounded-xl border-b-slate-500 hover:-translate-y-1 hover:bg-slate-300"
           >
@@ -72,6 +75,7 @@ const Slide = () => {
             onClick={() => {
               resetBoard();
               setResetTrue();
+              setIsGameOverFalse();
             }}
             className="px-4 py-3 text-base font-bold tracking-wider uppercase transition-all duration-150 ease-linear bg-yellow-500 border-b-4 rounded-xl border-b-yellow-600 hover:-translate-y-1 hover:bg-yellow-300"
           >

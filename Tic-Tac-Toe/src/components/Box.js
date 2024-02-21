@@ -1,29 +1,28 @@
+import {useRef, useEffect, useCallback} from "react";
 import {BsFillRecordCircleFill} from "react-icons/bs";
 import {ImCross} from "react-icons/im";
-import {useGlobalContext} from "../context";
-import {useRef, useEffect} from "react";
 import delay from "../utils/delay";
-import {useCallback} from "react";
+import {useGameContext} from "../context/game_context";
+import {useBoardContext} from "../context/board_context";
 
 const Box = ({pos}) => {
+  const {isXTurn, isGameOver, handleTurn} = useGameContext();
   const {
-    isXTurn,
-    handleTurn,
     setResetFalse,
     isReset,
     handleBoard,
-    isGameOver,
     resetBoard,
     countIncrement,
-  } = useGlobalContext();
+    isWinner,
+  } = useBoardContext();
   const boxElement = useRef();
 
   //For styling button when game is over
   const memoized = useCallback(async () => {
-    if (isGameOver.status) {
-      for (let x of isGameOver.winRow) {
+    if (isGameOver) {
+      for (let x of isWinner.winRow) {
         if (x == pos) {
-          if (isGameOver.winner === "x") {
+          if (isWinner.winner === "x") {
             const cross = boxElement.current.lastElementChild;
 
             //For adding style to the box
@@ -32,7 +31,7 @@ const Box = ({pos}) => {
             //For styling cross icon
             cross.classList.remove("text-cyan-400");
             cross.classList.add("text-slate-600");
-          } else if (isGameOver.winner == "0") {
+          } else if (isWinner.winner == "0") {
             const circle = boxElement.current.firstElementChild;
 
             //For adding style to the box
@@ -46,11 +45,11 @@ const Box = ({pos}) => {
         }
       }
     }
-  }, [isGameOver.status]);
+  }, [isGameOver]);
 
   useEffect(() => {
     memoized();
-  }, [isGameOver.status]);
+  }, [isGameOver]);
 
   //For resetting the board styling when reset btn is clicked
   useEffect(() => {
@@ -77,28 +76,21 @@ const Box = ({pos}) => {
 
         setResetFalse();
         resetBoard();
-      }, 200);
+      }, 100);
     }
   }, [isReset]);
 
   //For toggling 0 and x symbol in board
-  const handleBoxAndBoard = (e) => {
-    handleBox(e);
-  };
   const handleBox = (e) => {
     const circle = e.currentTarget.firstElementChild;
     const cross = e.currentTarget.lastElementChild;
 
-    if (!isXTurn && cross.classList.contains("hidden") && !isGameOver.status) {
+    if (!isXTurn && cross.classList.contains("hidden") && !isGameOver) {
       e.currentTarget.firstElementChild.classList.remove("hidden");
       handleTurn();
       handleBoard(pos);
       countIncrement();
-    } else if (
-      isXTurn &&
-      circle.classList.contains("hidden") &&
-      !isGameOver.status
-    ) {
+    } else if (isXTurn && circle.classList.contains("hidden") && !isGameOver) {
       e.currentTarget.lastElementChild.classList.remove("hidden");
       handleTurn();
       handleBoard(pos);
@@ -110,7 +102,7 @@ const Box = ({pos}) => {
     <div
       ref={boxElement}
       onClick={(e) => {
-        handleBoxAndBoard(e);
+        handleBox(e);
       }}
       className="grid w-16 h-16 border-b-4 rounded-md place-content-center group box-primary"
     >

@@ -1,11 +1,17 @@
 import {BsFillRecordCircleFill} from "react-icons/bs";
 import {ImCross} from "react-icons/im";
-import {useGlobalContext} from "../context";
-import {LongButton,DifficultySlider} from "../components"
+import {LongButton, DifficultySlider} from "../components";
+import {useGameContext} from "../context/game_context";
 
 const StartBox = () => {
-  const {setGameStartedTrue, isXTurn, setXTurnTrue, setXTurnFalse,setPlayerVsCpuOn} =
-    useGlobalContext();
+  const {
+    setIsGameStartedTrue,
+    isXTurn,
+    setXTurnTrue,
+    setXTurnFalse,
+    handleIsGameType,
+  } = useGameContext();
+
   return (
     <div className="grid w-screen h-screen place-content-center animate-fadeInUp">
       <div className="flex items-center justify-center mb-5 space-x-4">
@@ -50,12 +56,12 @@ const StartBox = () => {
         </p>
       </div>
       <LongButton
-        setGameStart={setPlayerVsCpuOn}
+        setGameStart={() => handleIsGameType("cpu")}
         color="yellow"
         text="NEW GAME (VS CPU)"
       />
       <LongButton
-        setGameStart={setGameStartedTrue}
+        setGameStart={setIsGameStartedTrue}
         color="cyan"
         text="NEW GAME (VS PLAYER)"
       />

@@ -1,6 +1,4 @@
-
 const LongButton = ({setGameStart, color, text}) => {
- 
   const colors = [
     `hover:bg-cyan-300`,
     `border-b-cyan-600`,

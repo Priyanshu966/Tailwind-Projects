@@ -1,9 +1,9 @@
 import { Board,StartBox } from "./components";
-import { useGlobalContext } from "./context";
+import { useGameContext } from "./context/game_context";
 
 
 function App() {
-  const {isGameStarted} = useGlobalContext();
+  const {isGameStarted} = useGameContext();
 
   return (
     <main className="grid w-screen h-screen font-sans bg-slate-800 place-content-center">
