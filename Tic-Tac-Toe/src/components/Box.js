@@ -22,6 +22,7 @@ const Box = ({pos}) => {
     if (isGameOver) {
       for (let x of isWinner.winRow) {
         if (x == pos) {
+          console.log("hellllooo");
           if (isWinner.winner === "x") {
             const cross = boxElement.current.lastElementChild;
 
@@ -45,11 +46,11 @@ const Box = ({pos}) => {
         }
       }
     }
-  }, [isGameOver]);
+  }, [isGameOver, isWinner]);
 
   useEffect(() => {
     memoized();
-  }, [isGameOver]);
+  }, [isGameOver, isWinner]);
 
   //For resetting the board styling when reset btn is clicked
   useEffect(() => {
@@ -104,7 +105,7 @@ const Box = ({pos}) => {
       onClick={(e) => {
         handleBox(e);
       }}
-      className="grid w-16 h-16 border-b-4 rounded-md place-content-center group box-primary"
+      className="grid w-16 h-16 transition-all duration-200 ease-linear border-b-4 rounded-md place-content-center group box-primary "
     >
       <BsFillRecordCircleFill className="hidden text-2xl text-yellow-500" />
       <ImCross className={`text-2xl text-cyan-400 hidden `} />

@@ -14,7 +14,7 @@ const Slide = () => {
         isGameOver
           ? isWinner.winner == "tie"
             ? "visible"
-            : "visible delay-[800ms]"
+            : "visible delay-[900ms]"
           : "invisible"
       } w-screen h-screen bg-black/50  fixed grid place-items-center transition-all duration-0`}
     >
@@ -23,7 +23,7 @@ const Slide = () => {
           isGameOver
             ? isWinner.winner == "tie"
               ? ""
-              : "delay-[800ms]"
+              : "delay-[900ms]"
             : "-translate-x-full"
         } font-sans w-full h-64 bg-slate-800 transition-all duration-500 linear `}
       >

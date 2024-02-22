@@ -1,4 +1,4 @@
-import {useContext, createContext,useState} from "react";
+import {useContext, createContext, useState} from "react";
 import {useGameContext} from "./game_context";
 import delay from "../utils/delay";
 
@@ -60,7 +60,7 @@ const BoardProvider = ({children}) => {
 
   //For handling game results
 
-  const handleResult = () => {
+  const handleResult = async () => {
     for (let i = 0; i < isWinCond.length; i++) {
       if (
         isBoard[isWinCond[i][0]] == isBoard[isWinCond[i][1]] &&
@@ -74,7 +74,19 @@ const BoardProvider = ({children}) => {
           winner = "0";
         }
         setIsGameOverTrue();
-        setIsWinner({winner, winRow: [...isWinCond[i]]});
+        setIsWinner({winner, winRow: [isWinCond[i][0]]});
+        await delay(200);
+        console.log("delay");
+        setIsWinner({
+          winner,
+          winRow: [isWinCond[i][0], isWinCond[i][1]],
+        });
+        await delay(200);
+        console.log("delay");
+        setIsWinner({
+          winner,
+          winRow: [isWinCond[i][0], isWinCond[i][1], isWinCond[i][2]],
+        });
         return;
       }
       if (isCount >= 9) {
