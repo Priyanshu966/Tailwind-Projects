@@ -5,17 +5,18 @@ import delay from "../utils/delay";
 const BoardContext = createContext();
 
 const BoardProvider = ({children}) => {
-  const {setIsGameOverTrue, isXTurn} = useGameContext();
+  const {setIsGameOverTrue, isTurn} = useGameContext();
 
   //Initial game array
-  const initialBoard = Array.from({length: 9});
+  const initialBoard = Array.from({length: 9}, (_, index) => index);
 
   //React states
   const [isReset, setIsReset] = useState(false);
   const [isBoard, setIsBoard] = useState(initialBoard);
-  const [isCount, setIsCount] = useState(1);
+  const [isCount, setIsCount] = useState(0);
   const [isWinner, setIsWinner] = useState({winner: "none", winRow: []});
-  const [isWinCond, setIsWinCond] = useState([
+
+  const winCond = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -24,11 +25,11 @@ const BoardProvider = ({children}) => {
     [2, 5, 8],
     [0, 4, 8],
     [6, 4, 2],
-  ]);
+  ];
 
   //For increasing count
-  const countIncrement = async () => {
-    await setIsCount((prev) => prev + 1);
+  const countIncrement = () => {
+    setIsCount((prev) => prev + 1);
   };
 
   //For resetting the game board
@@ -46,50 +47,57 @@ const BoardProvider = ({children}) => {
   };
 
   //For handling board array
-  const handleBoard = (pos) => {
-    let turn = "x";
-    if (isXTurn) {
-      turn = "x";
-    } else {
-      turn = "0";
-    }
-    isBoard[pos] = turn;
-    setIsBoard(isBoard);
+  const handleBoard = async (pos) => {
+    isBoard[pos] = isTurn;
+    await setIsBoard(isBoard);
+    console.log(isBoard);
     handleResult();
   };
 
   //For handling game results
 
   const handleResult = async () => {
-    for (let i = 0; i < isWinCond.length; i++) {
+    for (let i = 0; i < winCond.length; i++) {
       if (
-        isBoard[isWinCond[i][0]] == isBoard[isWinCond[i][1]] &&
-        isBoard[isWinCond[i][1]] == isBoard[isWinCond[i][2]] &&
-        isBoard[isWinCond[i][2]] != undefined
+        isBoard[winCond[i][0]] == isBoard[winCond[i][1]] &&
+        isBoard[winCond[i][1]] == isBoard[winCond[i][2]]
       ) {
         let winner;
-        if (isXTurn) {
+        if (isTurn == "x") {
           winner = "x";
         } else {
-          winner = "0";
+          winner = "o";
         }
         setIsGameOverTrue();
-        setIsWinner({winner, winRow: [isWinCond[i][0]]});
+        console.log("game over");
+        setIsWinner({winner, winRow: [winCond[i][0]]});
         await delay(200);
-        console.log("delay");
+
         setIsWinner({
           winner,
-          winRow: [isWinCond[i][0], isWinCond[i][1]],
+          winRow: [winCond[i][0], winCond[i][1]],
         });
         await delay(200);
-        console.log("delay");
+
         setIsWinner({
           winner,
-          winRow: [isWinCond[i][0], isWinCond[i][1], isWinCond[i][2]],
+          winRow: [winCond[i][0], winCond[i][1], winCond[i][2]],
         });
         return;
       }
-      if (isCount >= 9) {
+      // if (isCount >= 9) {
+      //   setIsGameOverTrue();
+      //   setIsWinner({winner: "tie", winRow: []});
+      //   return;
+      // }
+      let isTie = true;
+      for (let x of isBoard) {
+        if (typeof x == "number") {
+          isTie = false;
+          break;
+        }
+      }
+      if (isTie) {
         setIsGameOverTrue();
         setIsWinner({winner: "tie", winRow: []});
         return;
@@ -103,7 +111,7 @@ const BoardProvider = ({children}) => {
         isReset,
         isBoard,
         isCount,
-        isWinCond,
+        winCond,
         countIncrement,
         resetBoard,
         setResetFalse,

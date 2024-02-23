@@ -1,9 +1,9 @@
 import Box from "./Box";
 import Info from "./Info";
-import Slide from "./Slide";
+import WinnerSlider from "./WinnerSlider";
 import Board from "./Board";
 import StartBox from "./StartBox";
 import LongButton from "./LongButton";
 import DifficultySlider from "./DifficultySlider";
 
-export {Box,Info,Slide,Board,StartBox,LongButton,DifficultySlider};
+export {Box,Info,WinnerSlider,Board,StartBox,LongButton,DifficultySlider};

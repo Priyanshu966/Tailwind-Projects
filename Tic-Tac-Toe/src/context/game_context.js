@@ -6,7 +6,7 @@ const GameContext = createContext();
 
 const GameProvider = ({children}) => {
   const [isGameType, setIsGameType] = useState(null);
-  const [isXTurn, setIsXTurn] = useState(true);
+  const [isTurn, setIsTurn] = useState("x");
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
 
@@ -32,30 +32,26 @@ const GameProvider = ({children}) => {
   };
 
   //For changing turns
-  const handleTurn = () => {
-    if (isXTurn) {
-      setIsXTurn(false);
+  const changeTurn = () => {
+    if (isTurn == "x") {
+      setIsTurn("o");
     } else {
-      setIsXTurn(true);
+      setIsTurn("x");
     }
   };
-  const setXTurnTrue = () => {
-    setIsXTurn(true);
-  };
-  const setXTurnFalse = () => {
-    setIsXTurn(false);
-  };
+  const handleTurn = (turn) =>{
+    setIsTurn(turn);
+  }
 
   return (
     <GameContext.Provider
       value={{
         isGameType,
-        isXTurn,
+        isTurn,
         isGameStarted,
         isGameOver,
         handleTurn,
-        setXTurnTrue,
-        setXTurnFalse,
+        changeTurn,
         setIsGameStartedTrue,
         setIsGameStartedFalse,
         setIsGameOverTrue,

@@ -1,4 +1,4 @@
-import {Box,Info,Slide} from "../components"
+import {Box, Info, WinnerSlider} from "../components";
 
 const Board = () => {
   return (
@@ -15,8 +15,8 @@ const Board = () => {
         <Box pos={7} />
         <Box pos={8} />
       </div>
-      <Slide />
+      <WinnerSlider />
     </>
   );
-}
-export default Board
+};
+export default Board;

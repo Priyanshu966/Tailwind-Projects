@@ -6,7 +6,7 @@ import {useGameContext} from "../context/game_context";
 import {useBoardContext} from "../context/board_context";
 
 const Box = ({pos}) => {
-  const {isXTurn, isGameOver, handleTurn} = useGameContext();
+  const {isTurn, isGameOver, changeTurn} = useGameContext();
   const {
     setResetFalse,
     isReset,
@@ -22,7 +22,6 @@ const Box = ({pos}) => {
     if (isGameOver) {
       for (let x of isWinner.winRow) {
         if (x == pos) {
-          console.log("hellllooo");
           if (isWinner.winner === "x") {
             const cross = boxElement.current.lastElementChild;
 
@@ -32,7 +31,7 @@ const Box = ({pos}) => {
             //For styling cross icon
             cross.classList.remove("text-cyan-400");
             cross.classList.add("text-slate-600");
-          } else if (isWinner.winner == "0") {
+          } else if (isWinner.winner == "o") {
             const circle = boxElement.current.firstElementChild;
 
             //For adding style to the box
@@ -54,13 +53,14 @@ const Box = ({pos}) => {
 
   //For resetting the board styling when reset btn is clicked
   useEffect(() => {
+    //For adding style to the box
+    boxElement.current.classList.remove("box-cross");
+    boxElement.current.classList.remove("box-circle");
+
     if (isReset) {
       setTimeout(() => {
         const circle = boxElement.current.firstElementChild;
         const cross = boxElement.current.lastElementChild;
-
-        //For adding style to the box
-        boxElement.current.classList.remove("box-cross");
 
         //For styling cross icon
         cross.classList.add("hidden");
@@ -86,14 +86,14 @@ const Box = ({pos}) => {
     const circle = e.currentTarget.firstElementChild;
     const cross = e.currentTarget.lastElementChild;
 
-    if (!isXTurn && cross.classList.contains("hidden") && !isGameOver) {
+    if (isTurn == "o" && cross.classList.contains("hidden") && !isGameOver) {
       e.currentTarget.firstElementChild.classList.remove("hidden");
-      handleTurn();
+      changeTurn();
       handleBoard(pos);
       countIncrement();
-    } else if (isXTurn && circle.classList.contains("hidden") && !isGameOver) {
+    } else if (isTurn == "x" && circle.classList.contains("hidden") && !isGameOver) {
       e.currentTarget.lastElementChild.classList.remove("hidden");
-      handleTurn();
+      changeTurn();
       handleBoard(pos);
       countIncrement();
     }
