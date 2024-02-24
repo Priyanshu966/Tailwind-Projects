@@ -14,12 +14,15 @@ const Box = ({pos}) => {
     resetBoard,
     countIncrement,
     isWinner,
+    isBoard,
+    pseudoBoard,
+    handlePseudoBoard,
   } = useBoardContext();
   const boxElement = useRef();
 
   //For styling button when game is over
   const memoized = useCallback(async () => {
-    if (isGameOver) {
+    if (isWinner.winner) {
       for (let x of isWinner.winRow) {
         if (x == pos) {
           if (isWinner.winner === "x") {
@@ -82,28 +85,75 @@ const Box = ({pos}) => {
   }, [isReset]);
 
   //For toggling 0 and x symbol in board
-  const handleBox = (e) => {
-    const circle = e.currentTarget.firstElementChild;
-    const cross = e.currentTarget.lastElementChild;
+  // const handleBox = (e) => {
+  //   const circle = e.currentTarget.firstElementChild;
+  //   const cross = e.currentTarget.lastElementChild;
+
+  //   if (isTurn == "o" && cross.classList.contains("hidden") && !isGameOver) {
+  //     e.currentTarget.firstElementChild.classList.remove("hidden");
+  //     changeTurn();
+  //     handleBoard(pos);
+  //     countIncrement();
+  //   } else if (
+  //     isTurn == "x" &&
+  //     circle.classList.contains("hidden") &&
+  //     f!isGameOver
+  //   ) {
+  //     e.currentTarget.lastElementChild.classList.remove("hidden");
+  //     changeTurn();
+  //     handleBoard(pos);
+  //     countIncrement();
+  //   }
+  // };
+
+  const handleBox = () => {
+    const circle = boxElement.current.firstElementChild;
+    const cross = boxElement.current.lastElementChild;
 
     if (isTurn == "o" && cross.classList.contains("hidden") && !isGameOver) {
-      e.currentTarget.firstElementChild.classList.remove("hidden");
-      changeTurn();
       handleBoard(pos);
-      countIncrement();
-    } else if (isTurn == "x" && circle.classList.contains("hidden") && !isGameOver) {
-      e.currentTarget.lastElementChild.classList.remove("hidden");
-      changeTurn();
+    } else if (
+      isTurn == "x" &&
+      circle.classList.contains("hidden") &&
+      !isGameOver
+    ) {
       handleBoard(pos);
-      countIncrement();
     }
   };
+
+  useEffect(() => {
+    for (let i = 0; i < isBoard.length; i++) {
+      if (pos == i) {
+        const circle = boxElement.current.firstElementChild;
+        const cross = boxElement.current.lastElementChild;
+        if (
+          isBoard[i] == "o" &&
+          cross.classList.contains("hidden") &&
+          circle.classList.contains("hidden") &&
+          !isGameOver
+        ) {
+          circle.classList.remove("hidden");
+          countIncrement();
+          changeTurn();
+        } else if (
+          isBoard[i] == "x" &&
+          circle.classList.contains("hidden") &&
+          cross.classList.contains("hidden") &&
+          !isGameOver
+        ) {
+          cross.classList.remove("hidden");
+          countIncrement();
+          changeTurn();
+        }
+      }
+    }
+  }, [isBoard]);
 
   return (
     <div
       ref={boxElement}
-      onClick={(e) => {
-        handleBox(e);
+      onClick={() => {
+        handleBox();
       }}
       className="grid w-16 h-16 transition-all duration-200 ease-linear border-b-4 rounded-md place-content-center group box-primary "
     >

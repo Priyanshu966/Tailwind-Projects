@@ -13,8 +13,9 @@ const BoardProvider = ({children}) => {
   //React states
   const [isReset, setIsReset] = useState(false);
   const [isBoard, setIsBoard] = useState(initialBoard);
-  const [isCount, setIsCount] = useState(0);
+  const [isCount, setIsCount] = useState(1);
   const [isWinner, setIsWinner] = useState({winner: "none", winRow: []});
+  const [pseudoBoard, setPseudoBoard] = useState(initialBoard);
 
   const winCond = [
     [0, 1, 2],
@@ -30,11 +31,12 @@ const BoardProvider = ({children}) => {
   //For increasing count
   const countIncrement = () => {
     setIsCount((prev) => prev + 1);
+    console.log(isCount);
   };
 
   //For resetting the game board
   const resetBoard = async () => {
-    setIsBoard(initialBoard);
+    setIsBoard([...initialBoard]);
     setIsCount(1);
     await delay(800);
     setIsWinner({winner: "none", winRow: []});
@@ -47,11 +49,16 @@ const BoardProvider = ({children}) => {
   };
 
   //For handling board array
-  const handleBoard = async (pos) => {
+  const handleBoard = (pos) => {
     isBoard[pos] = isTurn;
-    await setIsBoard(isBoard);
+    setIsBoard([...isBoard]);
     console.log(isBoard);
     handleResult();
+  };
+
+  //For handling pseudoBoard array
+  const handlePseudoBoard = (arr) => {
+    setPseudoBoard(arr);
   };
 
   //For handling game results
@@ -68,41 +75,43 @@ const BoardProvider = ({children}) => {
         } else {
           winner = "o";
         }
-        setIsGameOverTrue();
+
         console.log("game over");
         setIsWinner({winner, winRow: [winCond[i][0]]});
         await delay(200);
 
         setIsWinner({
           winner,
-          winRow: [winCond[i][0], winCond[i][1]],
+          winRow: [...isWinner.winRow, winCond[i][1]],
         });
         await delay(200);
 
         setIsWinner({
           winner,
-          winRow: [winCond[i][0], winCond[i][1], winCond[i][2]],
+          winRow: [...isWinner.winRow, winCond[i][2]],
         });
-        return;
-      }
-      // if (isCount >= 9) {
-      //   setIsGameOverTrue();
-      //   setIsWinner({winner: "tie", winRow: []});
-      //   return;
-      // }
-      let isTie = true;
-      for (let x of isBoard) {
-        if (typeof x == "number") {
-          isTie = false;
-          break;
-        }
-      }
-      if (isTie) {
         setIsGameOverTrue();
-        setIsWinner({winner: "tie", winRow: []});
         return;
       }
     }
+
+    let isTie = true;
+    for (let x of isBoard) {
+      if (typeof x == "number") {
+        isTie = false;
+        break;
+      }
+    }
+    if (isTie) {
+      setIsGameOverTrue();
+      setIsWinner({winner: "tie", winRow: []});
+      return;
+    }
+    // if (isCount == 9) {
+    //   setIsGameOverTrue();
+    //   setIsWinner({winner: "tie", winRow: []});
+    //   return;
+    // }
   };
 
   return (
@@ -119,6 +128,8 @@ const BoardProvider = ({children}) => {
         handleBoard,
         handleResult,
         isWinner,
+        handlePseudoBoard,
+        pseudoBoard,
       }}
     >
       {children}
