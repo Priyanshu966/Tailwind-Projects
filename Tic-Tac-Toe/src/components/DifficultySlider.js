@@ -1,7 +1,7 @@
 import {useGameContext} from "../context/game_context";
 
 const DifficultySlider = () => {
-  const {isGameType, isGameStarted} = useGameContext();
+  const {isGameType, isGameStarted, setIsGameStartedTrue} = useGameContext();
   const difficulty = ["easy", "medium", "hard", "impossible"];
   return (
     <div
@@ -26,6 +26,7 @@ const DifficultySlider = () => {
             return (
               <button
                 key={index}
+                onClick={() => setIsGameStartedTrue()}
                 className="w-64 font-bold tracking-wider uppercase transition-all duration-150 ease-linear border-b-4 rounded-lg h-14 bg-slate-400 border-b-slate-600 hover:bg-slate-300 hover:-translate-y-1"
               >
                 {item}

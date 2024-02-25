@@ -12,10 +12,10 @@ const BoardProvider = ({children}) => {
 
   //React states
   const [isReset, setIsReset] = useState(false);
-  const [isBoard, setIsBoard] = useState(initialBoard);
+  const [isBoard, setIsBoard] = useState([...initialBoard]);
   const [isCount, setIsCount] = useState(1);
   const [isWinner, setIsWinner] = useState({winner: "none", winRow: []});
-  const [pseudoBoard, setPseudoBoard] = useState(initialBoard);
+  const [pseudoBoard, setPseudoBoard] = useState([...initialBoard]);
 
   const winCond = [
     [0, 1, 2],
@@ -31,12 +31,12 @@ const BoardProvider = ({children}) => {
   //For increasing count
   const countIncrement = () => {
     setIsCount((prev) => prev + 1);
-    console.log(isCount);
   };
 
   //For resetting the game board
   const resetBoard = async () => {
     setIsBoard([...initialBoard]);
+    setPseudoBoard([...initialBoard]);
     setIsCount(1);
     await delay(800);
     setIsWinner({winner: "none", winRow: []});
@@ -52,7 +52,6 @@ const BoardProvider = ({children}) => {
   const handleBoard = (pos) => {
     isBoard[pos] = isTurn;
     setIsBoard([...isBoard]);
-    console.log(isBoard);
     handleResult();
   };
 
@@ -95,23 +94,23 @@ const BoardProvider = ({children}) => {
       }
     }
 
-    let isTie = true;
-    for (let x of isBoard) {
-      if (typeof x == "number") {
-        isTie = false;
-        break;
-      }
-    }
-    if (isTie) {
-      setIsGameOverTrue();
-      setIsWinner({winner: "tie", winRow: []});
-      return;
-    }
-    // if (isCount == 9) {
+    // let isTie = true;
+    // for (let x of isBoard) {
+    //   if (typeof x == "number") {
+    //     isTie = false;
+    //     break;
+    //   }
+    // }
+    // if (isTie) {
     //   setIsGameOverTrue();
     //   setIsWinner({winner: "tie", winRow: []});
     //   return;
     // }
+    if (isCount == 9) {
+      setIsGameOverTrue();
+      setIsWinner({winner: "tie", winRow: []});
+      return;
+    }
   };
 
   return (

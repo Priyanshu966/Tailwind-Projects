@@ -6,7 +6,8 @@ import {useGameContext} from "../context/game_context";
 import {useBoardContext} from "../context/board_context";
 
 const Box = ({pos}) => {
-  const {isTurn, isGameOver, changeTurn} = useGameContext();
+  const {isTurn, isGameOver, changeTurn, isGameType, playerMark} =
+    useGameContext();
   const {
     setResetFalse,
     isReset,
@@ -16,7 +17,6 @@ const Box = ({pos}) => {
     isWinner,
     isBoard,
     pseudoBoard,
-    handlePseudoBoard,
   } = useBoardContext();
   const boxElement = useRef();
 
@@ -109,41 +109,37 @@ const Box = ({pos}) => {
   const handleBox = () => {
     const circle = boxElement.current.firstElementChild;
     const cross = boxElement.current.lastElementChild;
-
-    if (isTurn == "o" && cross.classList.contains("hidden") && !isGameOver) {
-      handleBoard(pos);
-    } else if (
-      isTurn == "x" &&
-      circle.classList.contains("hidden") &&
-      !isGameOver
+    if (
+      isGameType == "player" ||
+      (isGameType == "cpu" && playerMark.player1 == isTurn)
     ) {
-      handleBoard(pos);
+          if (
+            cross.classList.contains("hidden") &&
+            circle.classList.contains("hidden") &&
+            !isGameOver
+          ) {
+            handleBoard(pos);
+          }
     }
+
   };
 
   useEffect(() => {
-    for (let i = 0; i < isBoard.length; i++) {
-      if (pos == i) {
+    for (let i = 0; i < pseudoBoard.length; i++) {
+      let x = pseudoBoard[i];
+      if (x == pos) {
         const circle = boxElement.current.firstElementChild;
         const cross = boxElement.current.lastElementChild;
-        if (
-          isBoard[i] == "o" &&
-          cross.classList.contains("hidden") &&
-          circle.classList.contains("hidden") &&
-          !isGameOver
-        ) {
+        if (isBoard[x] == "o") {
           circle.classList.remove("hidden");
           countIncrement();
           changeTurn();
-        } else if (
-          isBoard[i] == "x" &&
-          circle.classList.contains("hidden") &&
-          cross.classList.contains("hidden") &&
-          !isGameOver
-        ) {
+          pseudoBoard.splice(i, 1);
+        } else if (isBoard[x] == "x") {
           cross.classList.remove("hidden");
           countIncrement();
           changeTurn();
+          pseudoBoard.splice(i, 1);
         }
       }
     }

@@ -9,7 +9,22 @@ const StartBox = () => {
     isTurn,
     handleTurn,
     handleIsGameType,
+    handlePlayerMark,
+    playerMark,
   } = useGameContext();
+
+  const setPlayerMark = () => {
+    let player1, player2;
+    if (isTurn == "x") {
+      player1 = "x";
+      player2 = "o";
+    } else if (isTurn == "o") {
+      player1 = "o";
+      player2 = "x";
+    }
+
+    handlePlayerMark(player1, player2);
+  };
 
   return (
     <div className="grid w-screen h-screen place-content-center animate-fadeInUp">
@@ -55,12 +70,18 @@ const StartBox = () => {
         </p>
       </div>
       <LongButton
-        setGameStart={() => handleIsGameType("cpu")}
+        setGameStart={() => {
+          setPlayerMark();
+          handleIsGameType("cpu");
+        }}
         color="yellow"
         text="NEW GAME (VS CPU)"
       />
       <LongButton
-        setGameStart={setIsGameStartedTrue}
+        setGameStart={() => {
+          setIsGameStartedTrue();
+          handleIsGameType("player");
+        }}
         color="cyan"
         text="NEW GAME (VS PLAYER)"
       />

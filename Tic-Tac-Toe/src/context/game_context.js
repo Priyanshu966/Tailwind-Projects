@@ -9,11 +9,16 @@ const GameProvider = ({children}) => {
   const [isTurn, setIsTurn] = useState("x");
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [playerMark, setPlayerMark] = useState({player1: "", player2: ""});
 
+  //For changing playerMark
+  const handlePlayerMark = (player1, player2) => {
+    setPlayerMark({player1: player1, player2: player2});
+  };
   //For changing isGameType
-  const handleIsGameType = (input) =>{
+  const handleIsGameType = (input) => {
     setIsGameType(input);
-  }
+  };
 
   //For changing isGameStarted
   const setIsGameStartedTrue = () => {
@@ -39,9 +44,9 @@ const GameProvider = ({children}) => {
       setIsTurn("x");
     }
   };
-  const handleTurn = (turn) =>{
+  const handleTurn = (turn) => {
     setIsTurn(turn);
-  }
+  };
 
   return (
     <GameContext.Provider
@@ -56,7 +61,9 @@ const GameProvider = ({children}) => {
         setIsGameStartedFalse,
         setIsGameOverTrue,
         setIsGameOverFalse,
-        handleIsGameType
+        handleIsGameType,
+        handlePlayerMark,
+        playerMark,
       }}
     >
       {children}
