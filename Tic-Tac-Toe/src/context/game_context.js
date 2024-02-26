@@ -15,6 +15,7 @@ const GameProvider = ({children}) => {
   const handlePlayerMark = (player1, player2) => {
     setPlayerMark({player1: player1, player2: player2});
   };
+  
   //For changing isGameType
   const handleIsGameType = (input) => {
     setIsGameType(input);

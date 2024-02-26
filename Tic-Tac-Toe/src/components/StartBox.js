@@ -79,6 +79,7 @@ const StartBox = () => {
       />
       <LongButton
         setGameStart={() => {
+          setPlayerMark();
           setIsGameStartedTrue();
           handleIsGameType("player");
         }}

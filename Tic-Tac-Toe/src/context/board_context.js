@@ -5,7 +5,8 @@ import delay from "../utils/delay";
 const BoardContext = createContext();
 
 const BoardProvider = ({children}) => {
-  const {setIsGameOverTrue, isTurn} = useGameContext();
+  const {setIsGameOverTrue, isTurn, handleTurn, playerMark, changeTurn} =
+    useGameContext();
 
   //Initial game array
   const initialBoard = Array.from({length: 9}, (_, index) => index);
@@ -37,6 +38,7 @@ const BoardProvider = ({children}) => {
   const resetBoard = async () => {
     setIsBoard([...initialBoard]);
     setPseudoBoard([...initialBoard]);
+    handleTurn(playerMark.player1);
     setIsCount(1);
     await delay(800);
     setIsWinner({winner: "none", winRow: []});
@@ -52,6 +54,8 @@ const BoardProvider = ({children}) => {
   const handleBoard = (pos) => {
     isBoard[pos] = isTurn;
     setIsBoard([...isBoard]);
+    changeTurn();
+    countIncrement();
     handleResult();
   };
 
@@ -68,12 +72,7 @@ const BoardProvider = ({children}) => {
         isBoard[winCond[i][0]] == isBoard[winCond[i][1]] &&
         isBoard[winCond[i][1]] == isBoard[winCond[i][2]]
       ) {
-        let winner;
-        if (isTurn == "x") {
-          winner = "x";
-        } else {
-          winner = "o";
-        }
+        let winner = isBoard[winCond[i][0]];
 
         console.log("game over");
         setIsWinner({winner, winRow: [winCond[i][0]]});

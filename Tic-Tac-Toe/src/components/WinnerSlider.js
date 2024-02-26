@@ -4,8 +4,12 @@ import {useGameContext} from "../context/game_context";
 import {useBoardContext} from "../context/board_context";
 
 const WinnerSlider = () => {
-  const {isGameOver, setIsGameOverFalse, setIsGameStartedFalse} =
-    useGameContext();
+  const {
+    isGameOver,
+    setIsGameOverFalse,
+    setIsGameStartedFalse,
+    handleIsGameType,
+  } = useGameContext();
   const {resetBoard, setResetTrue, isWinner} = useBoardContext();
 
   return (
@@ -66,6 +70,7 @@ const WinnerSlider = () => {
               setResetTrue();
               setIsGameStartedFalse();
               setIsGameOverFalse();
+              handleIsGameType(null);
             }}
             className="px-4 py-3 text-base font-bold tracking-wider uppercase transition-all duration-150 ease-linear border-b-4 bg-slate-400 rounded-xl border-b-slate-500 hover:-translate-y-1 hover:bg-slate-300"
           >

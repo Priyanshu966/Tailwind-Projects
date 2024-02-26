@@ -4,8 +4,11 @@ import {ImCross} from "react-icons/im";
 import delay from "../utils/delay";
 import {useGameContext} from "../context/game_context";
 import {useBoardContext} from "../context/board_context";
+import {useCpuContext} from "../context/cpu_context";
 
 const Box = ({pos}) => {
+  const {handleCpuTurn, isCpuTurn, setIsCpuTurnTrue, setIsCpuTurnFalse} =
+    useCpuContext();
   const {isTurn, isGameOver, changeTurn, isGameType, playerMark} =
     useGameContext();
   const {
@@ -113,32 +116,32 @@ const Box = ({pos}) => {
       isGameType == "player" ||
       (isGameType == "cpu" && playerMark.player1 == isTurn)
     ) {
-          if (
-            cross.classList.contains("hidden") &&
-            circle.classList.contains("hidden") &&
-            !isGameOver
-          ) {
-            handleBoard(pos);
-          }
+      if (
+        cross.classList.contains("hidden") &&
+        circle.classList.contains("hidden") &&
+        !isGameOver
+      ) {
+        handleBoard(pos);
+        
+      }
     }
-
+    if (isGameType == "cpu" && !isGameOver && isTurn == playerMark.player1) {
+      setIsCpuTurnTrue();
+    }
   };
 
   useEffect(() => {
     for (let i = 0; i < pseudoBoard.length; i++) {
       let x = pseudoBoard[i];
-      if (x == pos) {
+      if (x == pos && !isGameOver) {
         const circle = boxElement.current.firstElementChild;
         const cross = boxElement.current.lastElementChild;
         if (isBoard[x] == "o") {
           circle.classList.remove("hidden");
-          countIncrement();
-          changeTurn();
+
           pseudoBoard.splice(i, 1);
         } else if (isBoard[x] == "x") {
           cross.classList.remove("hidden");
-          countIncrement();
-          changeTurn();
           pseudoBoard.splice(i, 1);
         }
       }
