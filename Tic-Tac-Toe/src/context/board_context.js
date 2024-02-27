@@ -16,7 +16,7 @@ const BoardProvider = ({children}) => {
   const [isBoard, setIsBoard] = useState([...initialBoard]);
   const [isCount, setIsCount] = useState(1);
   const [isWinner, setIsWinner] = useState({winner: "none", winRow: []});
-  const [pseudoBoard, setPseudoBoard] = useState([...initialBoard]);
+  const [emptyBoard, setEmptyBoard] = useState([...initialBoard]);
 
   const winCond = [
     [0, 1, 2],
@@ -37,7 +37,7 @@ const BoardProvider = ({children}) => {
   //For resetting the game board
   const resetBoard = async () => {
     setIsBoard([...initialBoard]);
-    setPseudoBoard([...initialBoard]);
+    setEmptyBoard([...initialBoard]);
     handleTurn(playerMark.player1);
     setIsCount(1);
     await delay(800);
@@ -59,9 +59,9 @@ const BoardProvider = ({children}) => {
     handleResult();
   };
 
-  //For handling pseudoBoard array
-  const handlePseudoBoard = (arr) => {
-    setPseudoBoard(arr);
+  //For handling emptyBoard array
+  const handleEmptyBoard = (arr) => {
+    setEmptyBoard(arr);
   };
 
   //For handling game results
@@ -126,8 +126,8 @@ const BoardProvider = ({children}) => {
         handleBoard,
         handleResult,
         isWinner,
-        handlePseudoBoard,
-        pseudoBoard,
+        handleEmptyBoard,
+        emptyBoard,
       }}
     >
       {children}

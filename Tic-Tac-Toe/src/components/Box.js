@@ -19,7 +19,7 @@ const Box = ({pos}) => {
     countIncrement,
     isWinner,
     isBoard,
-    pseudoBoard,
+    emptyBoard,
   } = useBoardContext();
   const boxElement = useRef();
 
@@ -122,7 +122,6 @@ const Box = ({pos}) => {
         !isGameOver
       ) {
         handleBoard(pos);
-        
       }
     }
     if (isGameType == "cpu" && !isGameOver && isTurn == playerMark.player1) {
@@ -131,18 +130,18 @@ const Box = ({pos}) => {
   };
 
   useEffect(() => {
-    for (let i = 0; i < pseudoBoard.length; i++) {
-      let x = pseudoBoard[i];
+    for (let i = 0; i < emptyBoard.length; i++) {
+      let x = emptyBoard[i];
       if (x == pos && !isGameOver) {
         const circle = boxElement.current.firstElementChild;
         const cross = boxElement.current.lastElementChild;
         if (isBoard[x] == "o") {
           circle.classList.remove("hidden");
 
-          pseudoBoard.splice(i, 1);
+          emptyBoard.splice(i, 1);
         } else if (isBoard[x] == "x") {
           cross.classList.remove("hidden");
-          pseudoBoard.splice(i, 1);
+          emptyBoard.splice(i, 1);
         }
       }
     }

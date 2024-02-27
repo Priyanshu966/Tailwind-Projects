@@ -7,7 +7,7 @@ const CpuContext = createContext();
 
 const CpuProvider = ({children}) => {
   //useContext
-  const {pseudoBoard, handleBoard} = useBoardContext();
+  const {emptyBoard, handleBoard} = useBoardContext();
   const {isGameOver} = useGameContext();
 
   //Data
@@ -30,13 +30,26 @@ const CpuProvider = ({children}) => {
     setIsCpuTurn(false);
   };
 
+  //Probability for getting impossible turn (1 means highest chance of getting best possible spot)
+  const levels = {
+    easy: -1,
+    medium: 0.5,
+    hard: 0.75,
+    impossible: 1,
+  };
+
+  //For getting true or false(probability) for random pick or impossible pick
+  const probability = (n) => {
+    return Math.random() <= n;
+  };
+
   //For finding the best spot for cpu to take
   const bestSpot = () => {
-    console.log(pseudoBoard);
-    const spot = Math.floor(Math.random() * pseudoBoard.length);
-    if (isDifficulty == "easy") {
-      return pseudoBoard[spot];
+    if (!probability(levels[isDifficulty])) {
+      const spot = Math.floor(Math.random() * emptyBoard.length);
+      return emptyBoard[spot];
     }
+    //Impossible ai minimax
   };
 
   //For handling cpu turn
