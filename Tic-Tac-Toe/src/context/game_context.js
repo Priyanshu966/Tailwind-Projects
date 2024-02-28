@@ -13,7 +13,7 @@ const GameProvider = ({children}) => {
 
   //For changing playerMark
   const handlePlayerMark = (player1, player2) => {
-    setPlayerMark({player1: player1, player2: player2});
+    setPlayerMark({player1,player2});
   };
   
   //For changing isGameType

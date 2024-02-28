@@ -47,7 +47,7 @@ const WinnerSlider = () => {
               </h2>
               <BsFillRecordCircleFill className="text-5xl text-slate-300" />
             </>
-          ) : isWinner.winner == "o" ? (
+          ) : isWinner.winner == "circle" ? (
             <>
               <BsFillRecordCircleFill className="text-6xl text-yellow-500" />
               <h2 className="text-4xl font-bold tracking-wide text-yellow-500">

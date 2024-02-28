@@ -10,17 +10,16 @@ const StartBox = () => {
     handleTurn,
     handleIsGameType,
     handlePlayerMark,
-    playerMark,
   } = useGameContext();
 
   const setPlayerMark = () => {
     let player1, player2;
     if (isTurn == "x") {
-      player1 = "x";
-      player2 = "o";
+      player1 = "cross";
+      player2 = "circle";
     } else if (isTurn == "o") {
-      player1 = "o";
-      player2 = "x";
+      player1 = "circle";
+      player2 = "cross";
     }
 
     handlePlayerMark(player1, player2);

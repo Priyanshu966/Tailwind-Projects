@@ -38,7 +38,7 @@ const BoardProvider = ({children}) => {
   const resetBoard = async () => {
     setIsBoard([...initialBoard]);
     setEmptyBoard([...initialBoard]);
-    handleTurn(playerMark.player1);
+    handleTurn(playerMark.player1 == "cross" ? "x" : "o");
     setIsCount(1);
     await delay(800);
     setIsWinner({winner: "none", winRow: []});
@@ -54,6 +54,7 @@ const BoardProvider = ({children}) => {
   const handleBoard = (pos) => {
     isBoard[pos] = isTurn;
     setIsBoard([...isBoard]);
+    console.log(isBoard);
     changeTurn();
     countIncrement();
     handleResult();
@@ -66,50 +67,82 @@ const BoardProvider = ({children}) => {
 
   //For handling game results
 
+  // const handleResult = async () => {
+  //   for (let i = 0; i < winCond.length; i++) {
+  //     if (
+  //       isBoard[winCond[i][0]] == isBoard[winCond[i][1]] &&
+  //       isBoard[winCond[i][1]] == isBoard[winCond[i][2]]
+  //     ) {
+  //       let winner = isBoard[winCond[i][0]];
+
+  //       console.log("game over");
+  //       setIsWinner({winner, winRow: [winCond[i][0]]});
+  //       await delay(200);
+
+  //       setIsWinner({
+  //         winner,
+  //         winRow: [...isWinner.winRow, winCond[i][1]],
+  //       });
+  //       await delay(200);
+
+  //       setIsWinner({
+  //         winner,
+  //         winRow: [...isWinner.winRow, winCond[i][2]],
+  //       });
+  //       setIsGameOverTrue();
+  //       return;
+  //     }
+  //   }
+
   const handleResult = async () => {
-    for (let i = 0; i < winCond.length; i++) {
-      if (
-        isBoard[winCond[i][0]] == isBoard[winCond[i][1]] &&
-        isBoard[winCond[i][1]] == isBoard[winCond[i][2]]
-      ) {
-        let winner = isBoard[winCond[i][0]];
-
-        console.log("game over");
-        setIsWinner({winner, winRow: [winCond[i][0]]});
-        await delay(200);
-
-        setIsWinner({
-          winner,
-          winRow: [...isWinner.winRow, winCond[i][1]],
-        });
-        await delay(200);
-
-        setIsWinner({
-          winner,
-          winRow: [...isWinner.winRow, winCond[i][2]],
-        });
-        setIsGameOverTrue();
-        return;
-      }
-    }
-
-    // let isTie = true;
-    // for (let x of isBoard) {
-    //   if (typeof x == "number") {
-    //     isTie = false;
-    //     break;
-    //   }
-    // }
-    // if (isTie) {
-    //   setIsGameOverTrue();
-    //   setIsWinner({winner: "tie", winRow: []});
-    //   return;
-    // }
-    if (isCount == 9) {
-      setIsGameOverTrue();
-      setIsWinner({winner: "tie", winRow: []});
+    const result = checkResult([...isBoard]);
+    if (!result) {
       return;
     }
+    const {winner, winRow} = result;
+
+    if (winner == "cross" || "circle") {
+      const [a, b, c] = winRow;
+
+      setIsWinner({winner, winRow: [a]});
+
+      await delay(200);
+      setIsWinner({winner, winRow: [a, b]});
+
+      await delay(200);
+      setIsWinner({winner, winRow: [a, b, c]});
+
+      setIsGameOverTrue();
+    } else if (winner == "tie") {
+      setIsGameOverTrue();
+      setIsWinner({winner, winRow});
+    }
+  };
+
+  const checkResult = (board) => {
+    for (let i = 0; i < winCond.length; i++) {
+      const [a, b, c] = winCond[i];
+      if (board[a] == board[b] && board[b] == board[c]) {
+        let winner;
+        board[a] == "x" ? (winner = "cross") : (winner = "circle");
+
+        return {winner, winRow: winCond[i]};
+      }
+    }
+    let isTie = true;
+    for (let x of board) {
+      if (typeof x == "number") {
+        isTie = false;
+        break;
+      }
+    }
+    if (isTie) {
+      return {winner: "tie", winRow: []};
+    }
+    // if (isCount == 9) {
+    //   return {winner: "tie", winRow: []};
+    // }
+    return null;
   };
 
   return (
@@ -128,6 +161,7 @@ const BoardProvider = ({children}) => {
         isWinner,
         handleEmptyBoard,
         emptyBoard,
+        checkResult,
       }}
     >
       {children}

@@ -28,7 +28,7 @@ const Box = ({pos}) => {
     if (isWinner.winner) {
       for (let x of isWinner.winRow) {
         if (x == pos) {
-          if (isWinner.winner === "x") {
+          if (isWinner.winner === "cross") {
             const cross = boxElement.current.lastElementChild;
 
             //For adding style to the box
@@ -37,7 +37,7 @@ const Box = ({pos}) => {
             //For styling cross icon
             cross.classList.remove("text-cyan-400");
             cross.classList.add("text-slate-600");
-          } else if (isWinner.winner == "o") {
+          } else if (isWinner.winner == "circle") {
             const circle = boxElement.current.firstElementChild;
 
             //For adding style to the box
@@ -51,11 +51,11 @@ const Box = ({pos}) => {
         }
       }
     }
-  }, [isGameOver, isWinner]);
+  }, [isWinner.winRow]);
 
   useEffect(() => {
     memoized();
-  }, [isGameOver, isWinner]);
+  }, [isWinner.winRow]);
 
   //For resetting the board styling when reset btn is clicked
   useEffect(() => {
@@ -112,9 +112,15 @@ const Box = ({pos}) => {
   const handleBox = () => {
     const circle = boxElement.current.firstElementChild;
     const cross = boxElement.current.lastElementChild;
+    let player1Symbol;
+    if (playerMark.player1 == "cross") {
+      player1Symbol = "x";
+    } else if (playerMark.player1 == "circle") {
+      player1Symbol = "o";
+    }
     if (
       isGameType == "player" ||
-      (isGameType == "cpu" && playerMark.player1 == isTurn)
+      (isGameType == "cpu" && player1Symbol == isTurn)
     ) {
       if (
         cross.classList.contains("hidden") &&
@@ -124,7 +130,7 @@ const Box = ({pos}) => {
         handleBoard(pos);
       }
     }
-    if (isGameType == "cpu" && !isGameOver && isTurn == playerMark.player1) {
+    if (isGameType == "cpu" && !isGameOver && isTurn == player1Symbol) {
       setIsCpuTurnTrue();
     }
   };
@@ -132,7 +138,7 @@ const Box = ({pos}) => {
   useEffect(() => {
     for (let i = 0; i < emptyBoard.length; i++) {
       let x = emptyBoard[i];
-      if (x == pos && !isGameOver) {
+      if (x == pos) {
         const circle = boxElement.current.firstElementChild;
         const cross = boxElement.current.lastElementChild;
         if (isBoard[x] == "o") {
