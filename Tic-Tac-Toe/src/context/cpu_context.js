@@ -40,7 +40,7 @@ const CpuProvider = ({children}) => {
 
   //For getting true or false(probability) for random pick or impossible pick
   const probability = (n) => {
-    return Math.random() <= n;
+    return Math.random() < n;
   };
 
   //For finding the best spot for cpu to take
@@ -57,7 +57,7 @@ const CpuProvider = ({children}) => {
       if (typeof board[i] == "number") {
         board[i] = playerMark.player2 == "cross" ? "x" : "o";
         let score = minimax([...board], false, 1);
-        board[i] = null;
+        board[i] = i;
         if (score > bestScore) {
           bestScore = score;
           moveIndex = i;
@@ -94,7 +94,7 @@ const CpuProvider = ({children}) => {
         if (typeof board[i] == "number") {
           board[i] = playerMark.player2 == "cross" ? "x" : "o";
           bestScore = Math.max(minimax([...board], false, deph + 1), bestScore);
-          board[i] = null;
+          board[i] = i;
         }
       }
 
@@ -106,7 +106,7 @@ const CpuProvider = ({children}) => {
         if (typeof board[i] == "number") {
           board[i] = playerMark.player1 == "cross" ? "x" : "o";
           bestScore = Math.min(minimax([...board], true, deph + 1), bestScore);
-          board[i] = null;
+          board[i] = i;
         }
       }
 

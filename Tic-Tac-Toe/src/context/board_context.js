@@ -5,8 +5,14 @@ import delay from "../utils/delay";
 const BoardContext = createContext();
 
 const BoardProvider = ({children}) => {
-  const {setIsGameOverTrue, isTurn, handleTurn, playerMark, changeTurn} =
-    useGameContext();
+  const {
+    setIsGameOverTrue,
+    isTurn,
+    handleTurn,
+    playerMark,
+    changeTurn,
+    isGameOver,
+  } = useGameContext();
 
   //Initial game array
   const initialBoard = Array.from({length: 9}, (_, index) => index);
@@ -55,6 +61,9 @@ const BoardProvider = ({children}) => {
     isBoard[pos] = isTurn;
     setIsBoard([...isBoard]);
     console.log(isBoard);
+    if (isGameOver) {
+      return;
+    }
     changeTurn();
     countIncrement();
     handleResult();
@@ -103,7 +112,7 @@ const BoardProvider = ({children}) => {
 
     if (winner == "cross" || "circle") {
       const [a, b, c] = winRow;
-
+      setIsGameOverTrue();
       setIsWinner({winner, winRow: [a]});
 
       await delay(200);
@@ -111,8 +120,6 @@ const BoardProvider = ({children}) => {
 
       await delay(200);
       setIsWinner({winner, winRow: [a, b, c]});
-
-      setIsGameOverTrue();
     } else if (winner == "tie") {
       setIsGameOverTrue();
       setIsWinner({winner, winRow});
