@@ -1,7 +1,8 @@
 import {useRef, useEffect, useCallback} from "react";
 import {BsFillRecordCircleFill} from "react-icons/bs";
 import {ImCross} from "react-icons/im";
-import delay from "../utils/delay";
+import outlineCross from "../assets/icon-x-outline.svg";
+import outlineCircle from "../assets/icon-o-outline.svg";
 import {useGameContext} from "../context/game_context";
 import {useBoardContext} from "../context/board_context";
 import {useCpuContext} from "../context/cpu_context";
@@ -135,6 +136,7 @@ const Box = ({pos}) => {
     }
   };
 
+  //For handling board symbol when board array is changed
   useEffect(() => {
     for (let i = 0; i < emptyBoard.length; i++) {
       let x = emptyBoard[i];
@@ -159,10 +161,26 @@ const Box = ({pos}) => {
       onClick={() => {
         handleBox();
       }}
-      className="grid w-16 h-16 transition-all duration-200 ease-linear border-b-4 rounded-md place-content-center group box-primary "
+      className="grid w-16 h-16 transition-all duration-200 ease-out border-b-4 rounded-md place-content-center group box-primary "
     >
       <BsFillRecordCircleFill className="hidden text-2xl text-yellow-500" />
-      <ImCross className={`text-2xl text-cyan-400 hidden `} />
+      <img
+        src={outlineCircle}
+        className={`${
+          !isGameOver && isTurn == "o" && typeof isBoard[pos] == "number"
+            ? "group-hover:block"
+            : ""
+        } hidden w-6 h-6`}
+      />
+      <img
+        src={outlineCross}
+        className={`${
+          !isGameOver && isTurn == "x" && typeof isBoard[pos] == "number"
+            ? "group-hover:block"
+            : ""
+        } hidden w-6 h-6`}
+      />
+      <ImCross className={`text-2xl text-cyan-400 hidden`} />
     </div>
   );
 };

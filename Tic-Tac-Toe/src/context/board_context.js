@@ -59,11 +59,12 @@ const BoardProvider = ({children}) => {
   //For handling board array
   const handleBoard = (pos) => {
     isBoard[pos] = isTurn;
-    setIsBoard([...isBoard]);
-    console.log(isBoard);
     if (isGameOver) {
       return;
     }
+    setIsBoard([...isBoard]);
+    console.log(isBoard);
+    
     changeTurn();
     countIncrement();
     handleResult();

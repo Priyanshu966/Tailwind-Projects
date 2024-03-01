@@ -65,9 +65,10 @@ const StartBox = () => {
           </div>
         </div>
         <p className="mt-3 font-semibold text-center uppercase text-slate-400">
-          remember : x goes first
+          Remember: player 1 goes first
         </p>
       </div>
+
       <LongButton
         setGameStart={() => {
           setPlayerMark();
