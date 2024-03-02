@@ -155,6 +155,27 @@ const Box = ({pos}) => {
     }
   }, [isBoard]);
 
+  //For handling hover icon
+  const checkIconCond = (e) => {
+    let player2Symbol;
+    if (playerMark.player2 == "cross") {
+      player2Symbol = "x";
+    } else if (playerMark.player2 == "circle") {
+      player2Symbol = "o";
+    }
+    let check = false;
+    if (isGameType == "cpu" && isTurn == player2Symbol) {
+      return (check = false);
+    }
+    if (e == "x") {
+      check = !isGameOver && isTurn == "x" && typeof isBoard[pos] == "number";
+      return check;
+    } else if (e == "o") {
+      check = !isGameOver && isTurn == "o" && typeof isBoard[pos] == "number";
+      return check;
+    }
+  };
+
   return (
     <div
       ref={boxElement}
@@ -167,17 +188,13 @@ const Box = ({pos}) => {
       <img
         src={outlineCircle}
         className={`${
-          !isGameOver && isTurn == "o" && typeof isBoard[pos] == "number"
-            ? "group-hover:block"
-            : ""
+          checkIconCond("o") ? "group-hover:block" : ""
         } hidden w-6 h-6`}
       />
       <img
         src={outlineCross}
         className={`${
-          !isGameOver && isTurn == "x" && typeof isBoard[pos] == "number"
-            ? "group-hover:block"
-            : ""
+          checkIconCond("x") ? "group-hover:block" : ""
         } hidden w-6 h-6`}
       />
       <ImCross className={`text-2xl text-cyan-400 hidden`} />
