@@ -8,9 +8,9 @@ import {useBoardContext} from "../context/board_context";
 import {useCpuContext} from "../context/cpu_context";
 
 const Box = ({pos}) => {
-  const {handleCpuTurn, isCpuTurn, setIsCpuTurnTrue, setIsCpuTurnFalse} =
+  const {setIsCpuTurnTrue} =
     useCpuContext();
-  const {isTurn, isGameOver, changeTurn, isGameType, playerMark} =
+  const {isTurn, isGameOver,isGameType, playerMark} =
     useGameContext();
   const {
     setResetFalse,
