@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import {useContext, createContext, useState, useEffect} from "react";
 import {useBoardContext} from "./board_context";
 import {useGameContext} from "./game_context";

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import {useRef, useEffect, useCallback} from "react";
 import {BsFillRecordCircleFill} from "react-icons/bs";
 import {ImCross} from "react-icons/im";
@@ -8,10 +10,8 @@ import {useBoardContext} from "../context/board_context";
 import {useCpuContext} from "../context/cpu_context";
 
 const Box = ({pos}) => {
-  const {setIsCpuTurnTrue} =
-    useCpuContext();
-  const {isTurn, isGameOver,isGameType, playerMark} =
-    useGameContext();
+  const {setIsCpuTurnTrue} = useCpuContext();
+  const {isTurn, isGameOver, isGameType, playerMark} = useGameContext();
   const {
     setResetFalse,
     isReset,
@@ -186,14 +186,14 @@ const Box = ({pos}) => {
       <BsFillRecordCircleFill className="hidden text-2xl text-yellow-500" />
       <img
         src={outlineCircle}
-        alt='circle'
+        alt="circle"
         className={`${
           checkIconCond("o") ? "group-hover:block" : ""
         } hidden w-6 h-6`}
       />
       <img
         src={outlineCross}
-        alt='cross'
+        alt="cross"
         className={`${
           checkIconCond("x") ? "group-hover:block" : ""
         } hidden w-6 h-6`}
