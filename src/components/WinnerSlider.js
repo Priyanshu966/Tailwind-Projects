@@ -16,30 +16,30 @@ const WinnerSlider = () => {
     <div
       className={`${
         isGameOver
-          ? isWinner.winner == "tie"
+          ? isWinner.winner === "tie"
             ? "visible"
-            : "visible delay-[900ms]"
+            : "visible"
           : "invisible"
       } w-screen h-screen bg-black/50  fixed grid place-items-center transition-all duration-0`}
     >
       <div
         className={`${
           isGameOver
-            ? isWinner.winner == "tie"
+            ? isWinner.winner === "tie"
               ? "delay-[900ms]"
-              : "delay-[900ms]"
+              : "delay-[1500ms]"
             : "-translate-x-full"
         } font-sans w-full h-64 bg-slate-800 transition-all duration-500 linear `}
       >
         <p
           className={`${
-            isWinner.winner == "tie" ? "text-yellow-500" : "text-slate-400"
+            isWinner.winner === "tie" ? "text-yellow-500" : "text-slate-400"
           }  uppercase text-center font-bold tracking-wider mt-10`}
         >
           game over!
         </p>
         <div className="flex items-center justify-center mt-2 space-x-4 uppercase">
-          {isWinner.winner == "tie" ? (
+          {isWinner.winner === "tie" ? (
             <>
               <ImCross className="text-5xl text-slate-300" />
               <h2 className="px-3 text-4xl font-bold tracking-wide text-slate-300">
@@ -47,7 +47,7 @@ const WinnerSlider = () => {
               </h2>
               <BsFillRecordCircleFill className="text-5xl text-slate-300" />
             </>
-          ) : isWinner.winner == "circle" ? (
+          ) : isWinner.winner === "circle" ? (
             <>
               <BsFillRecordCircleFill className="text-6xl text-yellow-500" />
               <h2 className="text-4xl font-bold tracking-wide text-yellow-500">

@@ -9,12 +9,12 @@ const DifficultySlider = () => {
   return (
     <div
       className={`${
-        isGameType == "cpu" ? "visible" : "invisible"
+        isGameType === "cpu" ? "visible" : "invisible"
       } w-screen h-screen bg-black/50  fixed grid place-items-center z-50`}
     >
       <div
         className={`${
-          isGameType == "cpu" ? "" : "-translate-x-full"
+          isGameType === "cpu" ? "" : "-translate-x-full"
         } font-sans w-full bg-slate-800 transition-all duration-500 linear py-11`}
       >
         <p

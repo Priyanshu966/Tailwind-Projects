@@ -14,10 +14,10 @@ const StartBox = () => {
 
   const setPlayerMark = () => {
     let player1, player2;
-    if (isTurn == "x") {
+    if (isTurn === "x") {
       player1 = "cross";
       player2 = "circle";
-    } else if (isTurn == "o") {
+    } else if (isTurn === "o") {
       player1 = "circle";
       player2 = "cross";
     }
@@ -43,7 +43,7 @@ const StartBox = () => {
             >
               <BsFillRecordCircleFill
                 className={`${
-                  isTurn == "x" ? "text-slate-300" : "text-slate-800"
+                  isTurn === "x" ? "text-slate-300" : "text-slate-800"
                 } text-4xl text-slate-300 transition-all duration-400 ease-linear absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40`}
               />
             </div>
@@ -53,13 +53,13 @@ const StartBox = () => {
             >
               <ImCross
                 className={`${
-                  isTurn == "x" ? "text-slate-800" : "text-slate-300"
+                  isTurn === "x" ? "text-slate-800" : "text-slate-300"
                 } text-3xl text-slate-300 transition-all duration-400 ease-linear absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 z-40`}
               />
             </div>
             <div
               className={`${
-                isTurn == "x" ? "translate-x-full" : ""
+                isTurn === "x" ? "translate-x-full" : ""
               } bg-slate-300 w-1/2 h-[54px] rounded-xl absolute top-0 left-0 transition-all duration-200 ease-linear`}
             ></div>
           </div>

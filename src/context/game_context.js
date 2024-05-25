@@ -39,7 +39,7 @@ const GameProvider = ({children}) => {
 
   //For changing turns
   const changeTurn = () => {
-    if (isTurn == "x") {
+    if (isTurn === "x") {
       setIsTurn("o");
     } else {
       setIsTurn("x");

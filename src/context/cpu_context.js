@@ -54,8 +54,8 @@ const CpuProvider = ({children}) => {
     let moveIndex;
 
     for (let i = 0; i < board.length; i++) {
-      if (typeof board[i] == "number") {
-        board[i] = playerMark.player2 == "cross" ? "x" : "o";
+      if (typeof board[i] === "number") {
+        board[i] = playerMark.player2 === "cross" ? "x" : "o";
         let score = minimax([...board], false, 1);
         board[i] = i;
         if (score > bestScore) {
@@ -91,8 +91,8 @@ const CpuProvider = ({children}) => {
       let bestScore = -Infinity;
 
       for (let i = 0; i < board.length; i++) {
-        if (typeof board[i] == "number") {
-          board[i] = playerMark.player2 == "cross" ? "x" : "o";
+        if (typeof board[i] === "number") {
+          board[i] = playerMark.player2 === "cross" ? "x" : "o";
           bestScore = Math.max(minimax([...board], false, deph + 1), bestScore);
           board[i] = i;
         }
@@ -103,8 +103,8 @@ const CpuProvider = ({children}) => {
       let bestScore = Infinity;
 
       for (let i = 0; i < board.length; i++) {
-        if (typeof board[i] == "number") {
-          board[i] = playerMark.player1 == "cross" ? "x" : "o";
+        if (typeof board[i] === "number") {
+          board[i] = playerMark.player1 === "cross" ? "x" : "o";
           bestScore = Math.min(minimax([...board], true, deph + 1), bestScore);
           board[i] = i;
         }

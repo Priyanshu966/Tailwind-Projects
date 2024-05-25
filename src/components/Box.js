@@ -17,7 +17,6 @@ const Box = ({pos}) => {
     isReset,
     handleBoard,
     resetBoard,
-    countIncrement,
     isWinner,
     isBoard,
     emptyBoard,
@@ -28,7 +27,7 @@ const Box = ({pos}) => {
   const memoized = useCallback(async () => {
     if (isWinner.winner) {
       for (let x of isWinner.winRow) {
-        if (x == pos) {
+        if (x === pos) {
           if (isWinner.winner === "cross") {
             const cross = boxElement.current.lastElementChild;
 
@@ -38,7 +37,7 @@ const Box = ({pos}) => {
             //For styling cross icon
             cross.classList.remove("text-cyan-400");
             cross.classList.add("text-slate-600");
-          } else if (isWinner.winner == "circle") {
+          } else if (isWinner.winner === "circle") {
             const circle = boxElement.current.firstElementChild;
 
             //For adding style to the box
@@ -114,14 +113,14 @@ const Box = ({pos}) => {
     const circle = boxElement.current.firstElementChild;
     const cross = boxElement.current.lastElementChild;
     let player1Symbol;
-    if (playerMark.player1 == "cross") {
+    if (playerMark.player1 === "cross") {
       player1Symbol = "x";
-    } else if (playerMark.player1 == "circle") {
+    } else if (playerMark.player1 === "circle") {
       player1Symbol = "o";
     }
     if (
-      isGameType == "player" ||
-      (isGameType == "cpu" && player1Symbol == isTurn)
+      isGameType === "player" ||
+      (isGameType === "cpu" && player1Symbol === isTurn)
     ) {
       if (
         cross.classList.contains("hidden") &&
@@ -131,7 +130,7 @@ const Box = ({pos}) => {
         handleBoard(pos);
       }
     }
-    if (isGameType == "cpu" && !isGameOver && isTurn == player1Symbol) {
+    if (isGameType === "cpu" && !isGameOver && isTurn === player1Symbol) {
       setIsCpuTurnTrue();
     }
   };
@@ -140,14 +139,14 @@ const Box = ({pos}) => {
   useEffect(() => {
     for (let i = 0; i < emptyBoard.length; i++) {
       let x = emptyBoard[i];
-      if (x == pos) {
+      if (x === pos) {
         const circle = boxElement.current.firstElementChild;
         const cross = boxElement.current.lastElementChild;
-        if (isBoard[x] == "o") {
+        if (isBoard[x] === "o") {
           circle.classList.remove("hidden");
 
           emptyBoard.splice(i, 1);
-        } else if (isBoard[x] == "x") {
+        } else if (isBoard[x] === "x") {
           cross.classList.remove("hidden");
           emptyBoard.splice(i, 1);
         }
@@ -158,20 +157,20 @@ const Box = ({pos}) => {
   //For handling hover icon
   const checkIconCond = (e) => {
     let player2Symbol;
-    if (playerMark.player2 == "cross") {
+    if (playerMark.player2 === "cross") {
       player2Symbol = "x";
-    } else if (playerMark.player2 == "circle") {
+    } else if (playerMark.player2 === "circle") {
       player2Symbol = "o";
     }
     let check = false;
-    if (isGameType == "cpu" && isTurn == player2Symbol) {
+    if (isGameType === "cpu" && isTurn === player2Symbol) {
       return (check = false);
     }
-    if (e == "x") {
-      check = !isGameOver && isTurn == "x" && typeof isBoard[pos] == "number";
+    if (e === "x") {
+      check = !isGameOver && isTurn === "x" && typeof isBoard[pos] === "number";
       return check;
-    } else if (e == "o") {
-      check = !isGameOver && isTurn == "o" && typeof isBoard[pos] == "number";
+    } else if (e === "o") {
+      check = !isGameOver && isTurn === "o" && typeof isBoard[pos] === "number";
       return check;
     }
   };
@@ -187,12 +186,14 @@ const Box = ({pos}) => {
       <BsFillRecordCircleFill className="hidden text-2xl text-yellow-500" />
       <img
         src={outlineCircle}
+        alt='circle'
         className={`${
           checkIconCond("o") ? "group-hover:block" : ""
         } hidden w-6 h-6`}
       />
       <img
         src={outlineCross}
+        alt='cross'
         className={`${
           checkIconCond("x") ? "group-hover:block" : ""
         } hidden w-6 h-6`}

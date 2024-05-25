@@ -15,7 +15,7 @@ const Info = () => {
         <ImCross className="text-xl text-cyan-400" />
       </div>
       <div className="flex items-center justify-center w-20 h-8 font-extrabold uppercase border-b-4 rounded-md bg-slate-600 border-b-slate-950 text-slate-300 text-xs/8">
-        {isTurn == "o" ? (
+        {isTurn === "o" ? (
           <BsFillRecordCircleFill className="text-sm " />
         ) : (
           <ImCross className="text-sm" />
